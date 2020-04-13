@@ -56,8 +56,7 @@ namespace HoWestPost.UI
 
         private void ButtonMini_Click(object sender, RoutedEventArgs e)
         {
-            Conversie ec = new Conversie(CalcTime.Mini);
-            double mijl = ec(double.Parse(ComboxDeliveryTime.SelectedItem.ToString()));
+            
             AddToWaitinglist(PackageType.Mini);
         }
         private void ButtonStandaard_Click(object sender, RoutedEventArgs e)
@@ -76,8 +75,25 @@ namespace HoWestPost.UI
         }
         void AddToWaitinglist(PackageType packageType)
         {
+            double realTravelTime = 0;
+            if (packageType == PackageType.Mini ) { 
+                Conversie ec = new Conversie(CalcTime.Mini);
+                realTravelTime = ec(double.Parse(ComboxDeliveryTime.SelectedItem.ToString()));
+            }
+            if (packageType == PackageType.Standard)
+            {
+                Conversie ec = new Conversie(CalcTime.Standaard);
+                realTravelTime = ec(double.Parse(ComboxDeliveryTime.SelectedItem.ToString()));
+            }
+            if (packageType == PackageType.Maxi)
+            {
+                Conversie ec = new Conversie(CalcTime.Maxi);
+                realTravelTime = ec(double.Parse(ComboxDeliveryTime.SelectedItem.ToString()));
+            }
+
+
             deliveryNumber++;
-            var delivery = new Delivery(packageType, deliveryTime, CheckBoxPrior.IsChecked.Value, deliveryNumber);
+            var delivery = new Delivery(packageType, deliveryTime, CheckBoxPrior.IsChecked.Value, deliveryNumber, realTravelTime);
             //  deliveries.Append(delivery);
             deliveries.Add(delivery);
             deliv = deliveries.OrderBy(x => x.deliveryNumber);
