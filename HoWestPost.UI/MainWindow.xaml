@@ -1,0 +1,34 @@
+﻿<Window x:Class="HoWestPost.UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HoWestPost.UI"
+        mc:Ignorable="d"
+        Title="HoWest Post" Height="450" Width="800">
+    <Grid>
+        <CheckBox Content="CheckBox" HorizontalAlignment="Left" Margin="69,90,0,0" VerticalAlignment="Top"/>
+        <Button Content="mini" HorizontalAlignment="Left" Margin="10,136,0,0" VerticalAlignment="Top" Width="57"/>
+        <ListBox HorizontalAlignment="Left" Height="164" Margin="259,78,0,0" VerticalAlignment="Top" Width="237" AutomationProperties.Name="listBussy"/>
+        <Button Content="standaard" HorizontalAlignment="Left" Margin="72,136,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="maxi" HorizontalAlignment="Left" Margin="160,136,0,0" VerticalAlignment="Top" Width="75"/>
+        <Label Content="Reistijd" HorizontalAlignment="Left" Margin="18,49,0,0" VerticalAlignment="Top" AutomationProperties.Name="lblTravelTime"/>
+        <Label Content="Packet Versturen" HorizontalAlignment="Left" Margin="62,10,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="20"/>
+        <Label Content="In Behandeling" HorizontalAlignment="Left" Margin="284,10,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="20"/>
+        <Label Content="Onderweg" HorizontalAlignment="Left" Margin="570,10,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="20"/>
+        <Image HorizontalAlignment="Left" Height="82" Margin="587,53,0,0" VerticalAlignment="Top" Width="115"/>
+        <Image Margin="570,52,114,284" Source="Image1.png" Stretch="Fill" RenderTransformOrigin="1.769,1.202"/>
+        <ProgressBar HorizontalAlignment="Left" Height="10" Margin="570,160,0,0" VerticalAlignment="Top" Width="166" AutomationProperties.Name="progresTime"/>
+        <Label Content="Totale reistijd" HorizontalAlignment="Left" Margin="570,191,0,0" VerticalAlignment="Top" Width="99"/>
+        <Label Content="Post type" HorizontalAlignment="Left" Margin="570,228,0,0" VerticalAlignment="Top" Width="78"/>
+        <Label Content="Pior" HorizontalAlignment="Left" Margin="570,267,0,0" VerticalAlignment="Top"/>
+        <Label Content="Resterent" HorizontalAlignment="Left" Margin="570,307,0,0" VerticalAlignment="Top"/>
+        <Label HorizontalAlignment="Left" Margin="664,191,0,0" VerticalAlignment="Top" AutomationProperties.Name="lblTotalTravelTime" FontWeight="Bold"/>
+        <Label Content="lblPostType" HorizontalAlignment="Left" Margin="664,228,0,0" VerticalAlignment="Top" AutomationProperties.Name="lblPostType" FontWeight="Bold"/>
+        <Label Content="lblPrior" HorizontalAlignment="Left" Margin="664,267,0,0" VerticalAlignment="Top" AutomationProperties.Name="lblPrior" FontWeight="Bold"/>
+        <Label Content="lblResterent" HorizontalAlignment="Left" Margin="664,307,0,0" VerticalAlignment="Top" AutomationProperties.Name="lblResterent" FontWeight="Bold"/>
+        <Label Content="lblTotalTravelTime" HorizontalAlignment="Left" Margin="664,191,0,0" VerticalAlignment="Top" AutomationProperties.Name="lblTotalTravelTime" FontWeight="Bold"/>
+        <ComboBox IsSelected="True" x:Name="ComboxDeliveryTime" HorizontalAlignment="Left" Margin="84,52,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboxDeliveryTime_SelectionChanged"/>
+       
+    </Grid>
+</Window>
