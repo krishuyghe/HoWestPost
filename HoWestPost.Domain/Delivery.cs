@@ -27,5 +27,6 @@ namespace HoWestPost.Domain
             string ListText = $"{deliveryNumber} Pr={prior} {packageType} Time={travelTime} Real={realTravelTime}";
             return ListText;
         }
+
     }
 }

@@ -45,7 +45,11 @@ namespace HoWestPost.UI
             ComboxDeliveryTime.SelectedIndex = 0;
            
         }
-      
+        void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Hello, world!");
+        }
+
 
         private void ComboxDeliveryTime_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -57,15 +61,15 @@ namespace HoWestPost.UI
         private void ButtonMini_Click(object sender, RoutedEventArgs e)
         {
             
-            AddToWaitinglist(PackageType.Mini);
+            AddToWaitinglist(PackageType.Mini, double.Parse(ComboxDeliveryTime.SelectedItem.ToString()));
         }
         private void ButtonStandaard_Click(object sender, RoutedEventArgs e)
         {
-            AddToWaitinglist(PackageType.Standard);
+            AddToWaitinglist(PackageType.Standard, double.Parse(ComboxDeliveryTime.SelectedItem.ToString()));
         }
         private void buttonMaxi_Click(object sender, RoutedEventArgs e)
         {
-            AddToWaitinglist(PackageType.Maxi);
+            AddToWaitinglist(PackageType.Maxi, double.Parse(ComboxDeliveryTime.SelectedItem.ToString()));
         }
         
 
@@ -73,22 +77,22 @@ namespace HoWestPost.UI
         {
 
         }
-        void AddToWaitinglist(PackageType packageType)
+        void AddToWaitinglist(PackageType packageType, double traveltime)
         {
             double realTravelTime = 0;
             if (packageType == PackageType.Mini ) { 
                 Conversie ec = new Conversie(CalcTime.Mini);
-                realTravelTime = ec(double.Parse(ComboxDeliveryTime.SelectedItem.ToString()));
+                realTravelTime = ec(traveltime);
             }
-            if (packageType == PackageType.Standard)
+            else if (packageType == PackageType.Standard)
             {
                 Conversie ec = new Conversie(CalcTime.Standaard);
-                realTravelTime = ec(double.Parse(ComboxDeliveryTime.SelectedItem.ToString()));
+                realTravelTime = ec(traveltime);
             }
-            if (packageType == PackageType.Maxi)
+            else if (packageType == PackageType.Maxi)
             {
                 Conversie ec = new Conversie(CalcTime.Maxi);
-                realTravelTime = ec(double.Parse(ComboxDeliveryTime.SelectedItem.ToString()));
+                realTravelTime = ec(traveltime);
             }
 
 
