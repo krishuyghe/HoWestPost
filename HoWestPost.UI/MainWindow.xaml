@@ -7,11 +7,11 @@
         mc:Ignorable="d"
         Title="HoWest Post" Height="450" Width="800">
     <Grid>
-        <CheckBox Content="CheckBox" HorizontalAlignment="Left" Margin="69,90,0,0" VerticalAlignment="Top"/>
-        <Button Content="mini" HorizontalAlignment="Left" Margin="10,136,0,0" VerticalAlignment="Top" Width="57"/>
-        <ListBox HorizontalAlignment="Left" Height="164" Margin="259,78,0,0" VerticalAlignment="Top" Width="237" AutomationProperties.Name="listBussy"/>
-        <Button Content="standaard" HorizontalAlignment="Left" Margin="72,136,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="maxi" HorizontalAlignment="Left" Margin="160,136,0,0" VerticalAlignment="Top" Width="75"/>
+        <CheckBox x:Name="CheckBoxPrior" Content="Prior?" HorizontalAlignment="Left" Margin="69,90,0,0" VerticalAlignment="Top" Checked="CheckBoxPrior_Checked" />
+        <Button x:Name="ButtonMini" Content="mini" HorizontalAlignment="Left" Margin="10,136,0,0" VerticalAlignment="Top" Width="57" Click="ButtonMini_Click"/>
+        <ListBox x:Name="ListBoxWaiting" HorizontalAlignment="Left" Height="164" Margin="259,78,0,0" VerticalAlignment="Top" Width="237" AutomationProperties.Name="listBussy"/>
+        <Button x:Name="ButtonStandaard" Content="standaard" HorizontalAlignment="Left" Margin="72,136,0,0" VerticalAlignment="Top" Width="75" Click="ButtonStandaard_Click"/>
+        <Button x:Name="buttonMaxi" Content="maxi" HorizontalAlignment="Left" Margin="160,136,0,0" VerticalAlignment="Top" Width="75" Click="buttonMaxi_Click"/>
         <Label Content="Reistijd" HorizontalAlignment="Left" Margin="18,49,0,0" VerticalAlignment="Top" AutomationProperties.Name="lblTravelTime"/>
         <Label Content="Packet Versturen" HorizontalAlignment="Left" Margin="62,10,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="20"/>
         <Label Content="In Behandeling" HorizontalAlignment="Left" Margin="284,10,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="20"/>
