@@ -8,9 +8,9 @@ namespace HoWestPost.Domain
     {
         private PackageType packageType;
         private int travelTime;
-        private bool prior;
         private DateTime startTime;
-        private int deliveryNumber; 
+        public int deliveryNumber;
+        public bool prior;
 
         public Delivery(PackageType packageType, int travelTimeToDestination , bool prior, int deliveryNumber)
         {

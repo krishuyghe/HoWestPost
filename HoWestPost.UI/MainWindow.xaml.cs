@@ -26,9 +26,12 @@ namespace HoWestPost.UI
         int counter = 30;
         int deliveryTime = 30;
         bool prior = false;
+        Conversie convers;
+
         int deliveryNumber = 0;
-        ArrayList deliveries = new ArrayList();
-     //   List deliveries = new List();
+     //   ArrayList deliveries = new ArrayList();
+        List<Delivery> deliveries = new List<Delivery>();
+        IEnumerable<Delivery> deliv;
 
         public MainWindow()
         {
@@ -53,6 +56,8 @@ namespace HoWestPost.UI
 
         private void ButtonMini_Click(object sender, RoutedEventArgs e)
         {
+            Conversie ec = new Conversie(CalcTime.Mini);
+            double mijl = ec(double.Parse(ComboxDeliveryTime.SelectedItem.ToString()));
             AddToWaitinglist(PackageType.Mini);
         }
         private void ButtonStandaard_Click(object sender, RoutedEventArgs e)
@@ -75,11 +80,12 @@ namespace HoWestPost.UI
             var delivery = new Delivery(packageType, deliveryTime, CheckBoxPrior.IsChecked.Value, deliveryNumber);
             //  deliveries.Append(delivery);
             deliveries.Add(delivery);
-         
-          //  deliveries = deliveries.OrderBy(x => x.Name).ToArray();
-           // deliveries = deliveries.orderby()
+            deliv = deliveries.OrderBy(x => x.deliveryNumber);
+            deliv = deliv.OrderByDescending(a => a.prior);
+
+            
             ListBoxWaiting.Items.Clear();
-            foreach (Delivery d in deliveries)
+            foreach (Delivery d in deliv)
             {
                 ListBoxWaiting.Items.Add(d);
             }
