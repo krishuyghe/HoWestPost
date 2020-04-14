@@ -18,7 +18,7 @@
         <Label Content="Onderweg" HorizontalAlignment="Left" Margin="570,10,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="20"/>
         <Image HorizontalAlignment="Left" Height="82" Margin="587,53,0,0" VerticalAlignment="Top" Width="115"/>
         <Image Margin="570,52,114,284" Source="Image1.png" Stretch="Fill" RenderTransformOrigin="1.769,1.202"/>
-        <ProgressBar HorizontalAlignment="Left" Height="10" Margin="570,160,0,0" VerticalAlignment="Top" Width="166" AutomationProperties.Name="progresTime"/>
+        <ProgressBar x:Name="progressBar" HorizontalAlignment="Left" Height="10" Margin="570,160,0,0" VerticalAlignment="Top" Width="166" AutomationProperties.Name="progresTime"/>
         <Label Content="Totale reistijd" HorizontalAlignment="Left" Margin="570,191,0,0" VerticalAlignment="Top" Width="99"/>
         <Label Content="Post type" HorizontalAlignment="Left" Margin="570,228,0,0" VerticalAlignment="Top" Width="78"/>
         <Label Content="Pior" HorizontalAlignment="Left" Margin="570,267,0,0" VerticalAlignment="Top"/>
