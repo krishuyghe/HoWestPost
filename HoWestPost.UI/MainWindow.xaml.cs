@@ -30,13 +30,14 @@ namespace HoWestPost.UI
         int deliveryTime = 30;
         bool prior = false;
         Conversie convers;
+        int timePast = 0;
         private DeliveryProcessor deliveryProcessor;
 
         int deliveryNumber = 0;
      //   ArrayList deliveries = new ArrayList();
         List<Delivery> deliveries = new List<Delivery>();
         IEnumerable<Delivery> deliv;
-
+        Delivery activeDelivery;
         
 
         public MainWindow()
@@ -51,7 +52,7 @@ namespace HoWestPost.UI
             ComboxDeliveryTime.SelectedIndex = 0;
 
             DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Interval = TimeSpan.FromMilliseconds(100);
             timer.Tick += timer_Tick;
             timer.Start();
 
@@ -59,7 +60,49 @@ namespace HoWestPost.UI
         //// https://www.wpf-tutorial.com/misc/dispatchertimer/
         void timer_Tick(object sender, EventArgs e)
         {
+            
             lblTime.Content = DateTime.Now.ToLongTimeString();
+            if ((activeDelivery == null) && (deliv != null))
+            {
+                try
+                {
+                    activeDelivery = deliv.First();
+                    timePast = 0;
+                    deliveries.Remove(activeDelivery);
+                    deliv = deliveries.OrderBy(x => x.deliveryNumber).OrderByDescending(a => a.prior);
+
+                    lblPrior.Content = activeDelivery.prior;
+                    lblTotalTravelTime.Content = activeDelivery.realTravelTime.ToString() + "min";
+                    lblTimeLeft1.Content = activeDelivery.realTravelTime.ToString();
+                    lblType.Content = activeDelivery.packageType;
+
+                    ListBoxWaiting.Items.Clear();
+                    foreach (Delivery d in deliv)
+                    {
+                        ListBoxWaiting.Items.Add(d);
+                    }
+                }
+                catch
+                {
+
+                }
+                
+                
+            }
+            if (activeDelivery != null)
+            {
+                timePast += 1;
+                if (timePast <= activeDelivery.realTravelTime)
+                {
+                    lblTimeLeft1.Content = activeDelivery.realTravelTime - timePast;
+                }
+                else
+                {
+                    activeDelivery = null;
+                }
+                
+            }
+            
         }
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -127,10 +170,8 @@ namespace HoWestPost.UI
             var delivery = new Delivery(packageType, deliveryTime, CheckBoxPrior.IsChecked.Value, deliveryNumber, realTravelTime);
             //  deliveries.Append(delivery);
             deliveries.Add(delivery);
-            deliv = deliveries.OrderBy(x => x.deliveryNumber);
-            deliv = deliv.OrderByDescending(a => a.prior);
+            deliv = deliveries.OrderBy(x => x.deliveryNumber).OrderByDescending(a => a.prior);
 
-            
             ListBoxWaiting.Items.Clear();
             foreach (Delivery d in deliv)
             {

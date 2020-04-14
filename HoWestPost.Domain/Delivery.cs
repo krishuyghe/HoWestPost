@@ -6,9 +6,9 @@ namespace HoWestPost.Domain
 {
     public class Delivery
     {
-        private PackageType packageType;
-        private int travelTime;
-        private DateTime startTime;
+        public PackageType packageType;
+        public int travelTime;
+        public DateTime startTime;
         public int deliveryNumber;
         public bool prior;
         public double realTravelTime;

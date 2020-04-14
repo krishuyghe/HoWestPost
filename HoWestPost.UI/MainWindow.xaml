@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:HoWestPost.UI"
         mc:Ignorable="d"
         Title="HoWest Post" Height="450" Width="800" Loaded="MainWindow_Loaded">
-    <Grid>
+    <Grid x:Name="lblTimeLeft">
         <CheckBox x:Name="CheckBoxPrior" Content="Prior?" HorizontalAlignment="Left" Margin="69,90,0,0" VerticalAlignment="Top" Checked="CheckBoxPrior_Checked" />
         <Button x:Name="ButtonMini" Content="mini" HorizontalAlignment="Left" Margin="10,136,0,0" VerticalAlignment="Top" Width="57" Click="ButtonMini_Click"/>
         <ListBox x:Name="ListBoxWaiting" HorizontalAlignment="Left" Height="164" Margin="259,78,0,0" VerticalAlignment="Top" Width="237" AutomationProperties.Name="listBussy"/>
@@ -24,10 +24,10 @@
         <Label Content="Pior" HorizontalAlignment="Left" Margin="570,267,0,0" VerticalAlignment="Top"/>
         <Label Content="Resterent" HorizontalAlignment="Left" Margin="570,307,0,0" VerticalAlignment="Top"/>
         <Label HorizontalAlignment="Left" Margin="664,191,0,0" VerticalAlignment="Top" AutomationProperties.Name="lblTotalTravelTime" FontWeight="Bold"/>
-        <Label Content="lblPostType" HorizontalAlignment="Left" Margin="664,228,0,0" VerticalAlignment="Top" AutomationProperties.Name="lblPostType" FontWeight="Bold"/>
-        <Label Content="lblPrior" HorizontalAlignment="Left" Margin="664,267,0,0" VerticalAlignment="Top" AutomationProperties.Name="lblPrior" FontWeight="Bold"/>
-        <Label Content="lblResterent" HorizontalAlignment="Left" Margin="664,307,0,0" VerticalAlignment="Top" AutomationProperties.Name="lblResterent" FontWeight="Bold"/>
-        <Label Content="lblTotalTravelTime" HorizontalAlignment="Left" Margin="664,191,0,0" VerticalAlignment="Top" AutomationProperties.Name="lblTotalTravelTime" FontWeight="Bold"/>
+        <Label x:Name="lblType" Content="lblPostType" HorizontalAlignment="Left" Margin="664,228,0,0" VerticalAlignment="Top" AutomationProperties.Name="lblPostType" FontWeight="Bold"/>
+        <Label x:Name="lblPrior" Content="lblPrior" HorizontalAlignment="Left" Margin="664,267,0,0" VerticalAlignment="Top" AutomationProperties.Name="lblPrior" FontWeight="Bold"/>
+        <Label x:Name="lblTimeLeft1" Content="lblTimeleft" HorizontalAlignment="Left" Margin="664,307,0,0" VerticalAlignment="Top" AutomationProperties.Name="lblResterent" FontWeight="Bold"/>
+        <Label x:Name="lblTotalTravelTime" Content="lblTotalTravelTime" HorizontalAlignment="Left" Margin="664,191,0,0" VerticalAlignment="Top" AutomationProperties.Name="lblTotalTravelTime" FontWeight="Bold"/>
         <ComboBox IsSelected="True" x:Name="ComboxDeliveryTime" HorizontalAlignment="Left" Margin="84,52,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboxDeliveryTime_SelectionChanged"/>
         <Label x:Name="lblTime" Content="Label" HorizontalAlignment="Left" Margin="50,208,0,0" VerticalAlignment="Top" Width="97"/>
 
