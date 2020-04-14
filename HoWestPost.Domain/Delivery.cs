@@ -9,10 +9,10 @@ namespace HoWestPost.Domain
         public PackageType packageType;
         public int travelTime;
         public DateTime startTime;
+        public DateTime deliveryTime;
         public int deliveryNumber;
         public bool prior;
         public double realTravelTime;
-
         public Delivery(PackageType packageType, int travelTimeToDestination , bool prior, int deliveryNumber, double realTravelTime)
         {
             this.packageType = packageType;
@@ -24,7 +24,7 @@ namespace HoWestPost.Domain
         }
         public override string ToString()
         {
-            string ListText = $"{deliveryNumber} Pr={prior} {packageType} Time={travelTime} Real={realTravelTime}";
+            string ListText = $"{deliveryNumber} Pr={prior} {packageType} Time={travelTime} Real={realTravelTime} StartTime={startTime} DeliveryTime={deliveryTime}";
             return ListText;
         }
 

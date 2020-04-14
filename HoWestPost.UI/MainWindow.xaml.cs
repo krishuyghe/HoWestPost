@@ -28,17 +28,15 @@ namespace HoWestPost.UI
     {
         int counter = 30;
         int deliveryTime = 30;
-        int timePast = 0;
         public DateTime startTime;
         int deliveryNumber = 0;
         List<Delivery> deliveries = new List<Delivery>();
+        List<Delivery> sentPackets = new List<Delivery>();
         Delivery activeDelivery;
-        
-
+      
         public MainWindow()
         {
             InitializeComponent();
-           
             while (counter < 95)
             {
                 ComboxDeliveryTime.Items.Add(counter);
@@ -47,22 +45,17 @@ namespace HoWestPost.UI
             ComboxDeliveryTime.SelectedIndex = 0;
 
             DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(100);
-            timer.Tick += timer_Tick;
+            timer.Interval = TimeSpan.FromMilliseconds(1);
+            timer.Tick += new EventHandler(dispatcherTimer_Tick);
             timer.Start();
-
         }
-        //// https://www.wpf-tutorial.com/misc/dispatchertimer/
-        void timer_Tick(object sender, EventArgs e)
+      
+        void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-
             lblTime.Content = DateTime.Now.ToLongTimeString();
-            if ((activeDelivery == null) && (deliveries != null))
+            if ((activeDelivery == null) && (deliveries.Count() > 0))
             {
-                try
-                {
                     activeDelivery = deliveries.First();
-                    timePast = 0;
                     deliveries.Remove(activeDelivery);
                     startTime = DateTime.Now;
 
@@ -70,6 +63,7 @@ namespace HoWestPost.UI
                     lblTotalTravelTime.Content = activeDelivery.realTravelTime.ToString() + "min";
                     lblTimeLeft1.Content = activeDelivery.realTravelTime.ToString();
                     lblType.Content = activeDelivery.packageType;
+                    lblPacketNumber.Content = activeDelivery.deliveryNumber;
                     progressBar.Value = 0;
 
                     ListBoxWaiting.Items.Clear();
@@ -77,11 +71,7 @@ namespace HoWestPost.UI
                     {
                         ListBoxWaiting.Items.Add(d);
                     }
-                }
-                catch
-                {
-                     
-                }
+                
 
 
             }
@@ -96,42 +86,33 @@ namespace HoWestPost.UI
                 }
                 else
                 {
+                    activeDelivery.deliveryTime = DateTime.Now;
+                    sentPackets.Add(activeDelivery);
+                    ListBoxSent.Items.Add(activeDelivery);
                     activeDelivery = null;
-
                     lblTimeLeft1.Content = 0;
-                   
                 }
-
             }
-
+            if (sentPackets.Count() > 0)
+            {
+                double gemiddelde = 0;
+                foreach (Delivery d in sentPackets)
+                {
+                    gemiddelde += d.deliveryTime.Subtract(d.startTime).TotalSeconds;
+                }
+                lblGemiddelde.Content = gemiddelde / sentPackets.Count();
+            }
         }
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            
-            //MessageBox.Show("window loaded");
-            // Create a timer and set a two second interval.
-            
         }
-        private void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
-        {
-             MessageBox.Show(e.SignalTime.ToString());
-          //  lblTime.Content = e.SignalTime.ToString();
-        }
-
-
-
-
         private void ComboxDeliveryTime_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-         
             deliveryTime = Int32.Parse(ComboxDeliveryTime.SelectedItem.ToString());
-            
         }
-
         private void ButtonMini_Click(object sender, RoutedEventArgs e)
         {
-            
             AddToWaitinglist(PackageType.Mini, double.Parse(ComboxDeliveryTime.SelectedItem.ToString()));
         }
         private void ButtonStandaard_Click(object sender, RoutedEventArgs e)
@@ -142,11 +123,8 @@ namespace HoWestPost.UI
         {
             AddToWaitinglist(PackageType.Maxi, double.Parse(ComboxDeliveryTime.SelectedItem.ToString()));
         }
-        
-
         private void CheckBoxPrior_Checked(object sender, RoutedEventArgs e)
         {
-
         }
         void AddToWaitinglist(PackageType packageType, double traveltime)
         {
@@ -165,15 +143,9 @@ namespace HoWestPost.UI
                 Conversie ec = new Conversie(CalcTime.Maxi);
                 realTravelTime = ec(traveltime);
             }
-
-
             deliveryNumber++;
-            
-            
             deliveries.Add(new Delivery(packageType, deliveryTime, CheckBoxPrior.IsChecked.Value, deliveryNumber, realTravelTime));
             deliveries = deliveries.OrderBy(x => x.deliveryNumber).OrderByDescending(p => p.prior).ToList();  
-            
-
             ListBoxWaiting.Items.Clear();
             foreach (Delivery d in deliveries)
             {
