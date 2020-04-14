@@ -5,7 +5,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -15,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace HoWestPost.UI
 {
@@ -27,11 +30,14 @@ namespace HoWestPost.UI
         int deliveryTime = 30;
         bool prior = false;
         Conversie convers;
+        private DeliveryProcessor deliveryProcessor;
 
         int deliveryNumber = 0;
      //   ArrayList deliveries = new ArrayList();
         List<Delivery> deliveries = new List<Delivery>();
         IEnumerable<Delivery> deliv;
+
+        
 
         public MainWindow()
         {
@@ -43,12 +49,33 @@ namespace HoWestPost.UI
                 counter += 5;
             }
             ComboxDeliveryTime.SelectedIndex = 0;
-           
+
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += timer_Tick;
+            timer.Start();
+
         }
+        //// https://www.wpf-tutorial.com/misc/dispatchertimer/
+        void timer_Tick(object sender, EventArgs e)
+        {
+            lblTime.Content = DateTime.Now.ToLongTimeString();
+        }
+
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Hello, world!");
+            
+            //MessageBox.Show("window loaded");
+            // Create a timer and set a two second interval.
+            
         }
+        private void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
+        {
+             MessageBox.Show(e.SignalTime.ToString());
+          //  lblTime.Content = e.SignalTime.ToString();
+        }
+
+
 
 
         private void ComboxDeliveryTime_SelectionChanged(object sender, SelectionChangedEventArgs e)

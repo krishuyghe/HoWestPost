@@ -29,6 +29,7 @@
         <Label Content="lblResterent" HorizontalAlignment="Left" Margin="664,307,0,0" VerticalAlignment="Top" AutomationProperties.Name="lblResterent" FontWeight="Bold"/>
         <Label Content="lblTotalTravelTime" HorizontalAlignment="Left" Margin="664,191,0,0" VerticalAlignment="Top" AutomationProperties.Name="lblTotalTravelTime" FontWeight="Bold"/>
         <ComboBox IsSelected="True" x:Name="ComboxDeliveryTime" HorizontalAlignment="Left" Margin="84,52,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboxDeliveryTime_SelectionChanged"/>
-       
+        <Label x:Name="lblTime" Content="Label" HorizontalAlignment="Left" Margin="50,208,0,0" VerticalAlignment="Top" Width="97"/>
+
     </Grid>
 </Window>
