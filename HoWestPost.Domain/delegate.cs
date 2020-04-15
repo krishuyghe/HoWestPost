@@ -4,7 +4,11 @@ using System.Text;
 
 namespace HoWestPost.Domain
 {
-    public delegate double Conversie (double gegeven);
-    //  public delegate void CrowdCounterEvent();
     
+    public delegate double Conversie (double gegeven);
+    public delegate void TiktHandler(object sender);
+    class Delegates
+    {
+    }
+
 }

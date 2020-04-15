@@ -24,9 +24,22 @@ namespace HoWestPost.Domain
         }
         public override string ToString()
         {
-            string ListText = $"{deliveryNumber} Pr={prior} {packageType} Time={travelTime} Real={realTravelTime} StartTime={startTime} DeliveryTime={deliveryTime}";
+            int diverent = DateTime.Compare(startTime, deliveryTime);
+            string ListText = "leeg";
+            if (diverent > 0)
+            {
+                ListText = $"{deliveryNumber} Pr={prior} {packageType} Time={travelTime} Real={realTravelTime} StartTime={startTime}";
+            }
+            else
+            {
+                ListText = $"{deliveryNumber} Pr={prior} {packageType} StartTime={startTime} DeliveryTime={deliveryTime}";
+            }
             return ListText;
         }
 
+        private void Compare(int dateTime1, object dateTime2, int dateTime3, object d2)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
