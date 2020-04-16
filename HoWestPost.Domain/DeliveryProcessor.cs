@@ -67,16 +67,16 @@ namespace HoWestPost.Domain
             deliveries.Add(new Delivery(packageType, traveltime, prior, deliveryNumber, realTravelTime));
             deliveries = deliveries.OrderBy(x => x.deliveryNumber).OrderByDescending(p => p.prior).ToList();
         }
-        public double AverageTime()
+        public double AverageTime(List<Delivery> sent)
         {
             double gemiddelde = 0;
-            if (sentPackets.Count() > 0)
+            if (sent.Count() > 0)
             {                
-                foreach (Delivery d in sentPackets)
+                foreach (Delivery d in sent)
                 {
                     gemiddelde += d.deliveryTime.Subtract(d.startTime).TotalSeconds;
                 }
-                return gemiddelde / sentPackets.Count();
+                return gemiddelde / sent.Count();
             }
             else
             {
@@ -86,6 +86,43 @@ namespace HoWestPost.Domain
         }
 
         #endregion
+        public bool IsThereWorkInWaitingList ()
+        {
+            bool work = false;
+            if ((activeDelivery == null) && (deliveries.Count() > 0))
+            {
+                activeDelivery = deliveries.First();
+                deliveries.Remove(activeDelivery);
+                startTime = DateTime.Now;
+
+                
+                work = true;
+            }
+            return work;
+        }
+        public double TimeLeft ()
+        {
+            double value = 0;
+            if (activeDelivery != null)
+            {
+                double TimeDiverence = DateTime.Now.Subtract(startTime).TotalSeconds;
+             //   progressBar.Value = ((TimeDiverence * 10) / deliveryProcessor.activeDelivery.realTravelTime) * 100;
+                if ((10 * TimeDiverence) <= activeDelivery.realTravelTime)
+                {
+                    value = activeDelivery.realTravelTime - (10 * TimeDiverence);
+                }
+                else
+                {
+                    activeDelivery.deliveryTime = DateTime.Now;
+                    sentPackets.Add(activeDelivery);
+                 //   ListBoxSent.Items.Add(deliveryProcessor.activeDelivery);
+                    activeDelivery = null;
+
+                    value = 0;
+                }
+            }
+            return value;
+        }
 
 
     }

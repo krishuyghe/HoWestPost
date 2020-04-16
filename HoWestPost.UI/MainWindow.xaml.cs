@@ -13,19 +13,14 @@ namespace HoWestPost.UI
     public partial class MainWindow : Window
     {
         #region Global variable
-        int counter = 30;
+        
         DeliveryProcessor deliveryProcessor;
         #endregion
         #region MainWindow
         public MainWindow()
         {
             InitializeComponent();
-            while (counter < 95)
-            {
-                ComboxDeliveryTime.Items.Add(counter);
-                counter += 5;
-            }
-            ComboxDeliveryTime.SelectedIndex = 0;
+            FillComboxDeliveryTime();
         }
         #endregion
         #region window open/closed
@@ -51,56 +46,46 @@ namespace HoWestPost.UI
             Dispatcher.Invoke(delegate
             {
                 lblTime.Content = DateTime.Now.ToLongTimeString();
-                lblGemiddelde.Content = deliveryProcessor.AverageTime();
+            
+                lblGemiddelde.Content = deliveryProcessor.AverageTime(deliveryProcessor.sentPackets);
+                lblGemiddeldeNonPrior.Content = deliveryProcessor.AverageTime(deliveryProcessor.sentPackets.Where(_ => _.prior == false).ToList());
+                lblGemiddelde_Pror.Content = deliveryProcessor.AverageTime(deliveryProcessor.sentPackets.Where(_ => _.prior == true).ToList());
 
-
-                if ((deliveryProcessor.activeDelivery == null) && (deliveryProcessor.deliveries.Count() > 0))
+                if (deliveryProcessor.IsThereWorkInWaitingList() == true)
                 {
-                    deliveryProcessor.activeDelivery = deliveryProcessor.deliveries.First();
-                    deliveryProcessor.deliveries.Remove(deliveryProcessor.activeDelivery);
-                    deliveryProcessor.startTime = DateTime.Now;
-
-                    UpdateGui();
-
-                }
-                if (deliveryProcessor.activeDelivery != null)
-                {
-
-                    double TimeDiverence = DateTime.Now.Subtract(deliveryProcessor.startTime).TotalSeconds;
-                    progressBar.Value = ((TimeDiverence * 10) / deliveryProcessor.activeDelivery.realTravelTime) * 100;
-                    if ((10 * TimeDiverence) <= deliveryProcessor.activeDelivery.realTravelTime)
+                    lblPrior.Content = deliveryProcessor.activeDelivery.prior;
+                    lblTotalTravelTime.Content = deliveryProcessor.activeDelivery.realTravelTime.ToString() + "min";
+                    lblTimeLeft1.Content = deliveryProcessor.activeDelivery.realTravelTime.ToString();
+                    lblType.Content = deliveryProcessor.activeDelivery.packageType;
+                    lblPacketNumber.Content = deliveryProcessor.activeDelivery.deliveryNumber;
+                    progressBar.Value = 0;
+                    ListBoxWaiting.Items.Clear();
+                    foreach (Delivery d in deliveryProcessor.deliveries)
                     {
-                        lblTimeLeft1.Content = deliveryProcessor.activeDelivery.realTravelTime - (10 * TimeDiverence);
-                    }
-                    else
-                    {
-                        deliveryProcessor.activeDelivery.deliveryTime = DateTime.Now;
-                        deliveryProcessor.sentPackets.Add(deliveryProcessor.activeDelivery);
-                        ListBoxSent.Items.Add(deliveryProcessor.activeDelivery);
-                        deliveryProcessor.activeDelivery = null;
-                        
-                        lblTimeLeft1.Content = 0;
+                        ListBoxWaiting.Items.Add(d);
                     }
                 }
-               
-                    
-                
+
+
+                lblTimeLeft1.Content = deliveryProcessor.TimeLeft();
+                if (deliveryProcessor.TimeLeft() > 0)
+                {
+                    progressBar.Value = 100 - ((deliveryProcessor.TimeLeft()/deliveryProcessor.activeDelivery.realTravelTime  ) * 100);
+                }
+                if (deliveryProcessor.sentPackets.Count() > 0)
+                {
+                    ListBoxSent.Items.Clear();
+                    foreach (Delivery d in deliveryProcessor.sentPackets)
+                    {
+                        ListBoxWaiting.Items.Add(d);
+                    }
+                }
+
+
+
             });
         }
-        void UpdateGui()
-        {
-            lblPrior.Content = deliveryProcessor.activeDelivery.prior;
-            lblTotalTravelTime.Content = deliveryProcessor.activeDelivery.realTravelTime.ToString() + "min";
-            lblTimeLeft1.Content = deliveryProcessor.activeDelivery.realTravelTime.ToString();
-            lblType.Content = deliveryProcessor.activeDelivery.packageType;
-            lblPacketNumber.Content = deliveryProcessor.activeDelivery.deliveryNumber;
-            progressBar.Value = 0;
-            ListBoxWaiting.Items.Clear();
-            foreach (Delivery d in deliveryProcessor.deliveries)
-            {
-                ListBoxWaiting.Items.Add(d);
-            }
-        }
+        
         #endregion
 
       
@@ -134,6 +119,16 @@ namespace HoWestPost.UI
             }
         }
         #endregion
+        private void FillComboxDeliveryTime ()
+        {
+            int counter = 30;
+            while (counter < 95)
+            {
+                ComboxDeliveryTime.Items.Add(counter);
+                counter += 5;
+            }
+            ComboxDeliveryTime.SelectedIndex = 0;
+        }
 
         private void ComboxDeliveryTime_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
