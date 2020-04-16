@@ -33,7 +33,6 @@ namespace HoWestPost.UI
         }
          private void MainWindow_Closed(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            // Zorgt ervoor dat de timer niet blijft lopen als process (thread)
             if (deliveryProcessor != null)
             {
                 deliveryProcessor.Stop();
@@ -47,9 +46,10 @@ namespace HoWestPost.UI
             {
                 lblTime.Content = DateTime.Now.ToLongTimeString();
             
-                lblGemiddelde.Content = deliveryProcessor.AverageTime(deliveryProcessor.sentPackets);
-                lblGemiddeldeNonPrior.Content = deliveryProcessor.AverageTime(deliveryProcessor.sentPackets.Where(_ => _.prior == false).ToList());
-                lblGemiddelde_Pror.Content = deliveryProcessor.AverageTime(deliveryProcessor.sentPackets.Where(_ => _.prior == true).ToList());
+                lblGemiddelde.Content = deliveryProcessor.AverageTime(deliveryProcessor.sentPackets).ToString("#0.00");
+                lblGemiddeldeNonPrior.Content = deliveryProcessor.AverageTime(deliveryProcessor.sentPackets.Where(_ => _.prior == false).ToList()).ToString("#0.00");
+                lblGemiddelde_Pror.Content = deliveryProcessor.AverageTime(deliveryProcessor.sentPackets.Where(_ => _.prior == true).ToList()).ToString("#0.00");
+                lblTimeLeft1.Content = deliveryProcessor.TimeLeft().ToString("#0.00");
 
                 if (deliveryProcessor.IsThereWorkInWaitingList() == true)
                 {
@@ -65,24 +65,15 @@ namespace HoWestPost.UI
                         ListBoxWaiting.Items.Add(d);
                     }
                 }
-
-
-                lblTimeLeft1.Content = deliveryProcessor.TimeLeft();
+                
                 if (deliveryProcessor.TimeLeft() > 0)
                 {
                     progressBar.Value = 100 - ((deliveryProcessor.TimeLeft()/deliveryProcessor.activeDelivery.realTravelTime  ) * 100);
                 }
-                if (deliveryProcessor.sentPackets.Count() > 0)
+                if (deliveryProcessor.sentPackets.Count() > ListBoxSent.Items.Count)
                 {
-                    ListBoxSent.Items.Clear();
-                    foreach (Delivery d in deliveryProcessor.sentPackets)
-                    {
-                        ListBoxWaiting.Items.Add(d);
-                    }
+                    ListBoxSent.Items.Add(deliveryProcessor.sentPackets.Last());
                 }
-
-
-
             });
         }
         

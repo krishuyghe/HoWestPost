@@ -37,9 +37,6 @@ namespace HoWestPost.Domain
             return ListText;
         }
 
-        private void Compare(int dateTime1, object dateTime2, int dateTime3, object d2)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

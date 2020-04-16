@@ -76,7 +76,7 @@ namespace HoWestPost.Domain
                 {
                     gemiddelde += d.deliveryTime.Subtract(d.startTime).TotalSeconds;
                 }
-                return gemiddelde / sent.Count();
+                return gemiddelde / sent.Count() * 10;
             }
             else
             {
@@ -94,8 +94,6 @@ namespace HoWestPost.Domain
                 activeDelivery = deliveries.First();
                 deliveries.Remove(activeDelivery);
                 startTime = DateTime.Now;
-
-                
                 work = true;
             }
             return work;
@@ -106,7 +104,6 @@ namespace HoWestPost.Domain
             if (activeDelivery != null)
             {
                 double TimeDiverence = DateTime.Now.Subtract(startTime).TotalSeconds;
-             //   progressBar.Value = ((TimeDiverence * 10) / deliveryProcessor.activeDelivery.realTravelTime) * 100;
                 if ((10 * TimeDiverence) <= activeDelivery.realTravelTime)
                 {
                     value = activeDelivery.realTravelTime - (10 * TimeDiverence);
@@ -115,9 +112,7 @@ namespace HoWestPost.Domain
                 {
                     activeDelivery.deliveryTime = DateTime.Now;
                     sentPackets.Add(activeDelivery);
-                 //   ListBoxSent.Items.Add(deliveryProcessor.activeDelivery);
                     activeDelivery = null;
-
                     value = 0;
                 }
             }
