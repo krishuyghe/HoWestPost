@@ -28,6 +28,8 @@ namespace HoWestPost.Domain
             timer.Interval = 1;   
             timer.Elapsed += Timer_Elapsed;
         }
+
+      
         #endregion
 
         #region Klassemethoden
@@ -86,7 +88,7 @@ namespace HoWestPost.Domain
         }
 
         #endregion
-        public bool IsThereWorkInWaitingList ()
+        public  bool IsThereWorkInWaitingList ()
         {
             bool work = false;
             if ((activeDelivery == null) && (deliveries.Count() > 0))

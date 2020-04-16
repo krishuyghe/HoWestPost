@@ -26,13 +26,19 @@ namespace HoWestPost.Domain
         {
             int diverent = DateTime.Compare(startTime, deliveryTime);
             string ListText = "leeg";
+            string pr = "Non-prior";
+            if (prior == true)
+            {
+                pr = "Prior";
+            }
             if (diverent > 0)
             {
-                ListText = $"{deliveryNumber} Pr={prior} {packageType} Time={travelTime} Real={realTravelTime} StartTime={startTime}";
+                ListText = $"{deliveryNumber} {pr} {packageType} Reistijd={travelTime} Starttijd={startTime.ToLongTimeString()}";
             }
             else
             {
-                ListText = $"{deliveryNumber} Pr={prior} {packageType} StartTime={startTime} DeliveryTime={deliveryTime}";
+                double tijdsduur = deliveryTime.Subtract(startTime).TotalSeconds * 10;
+                ListText = $"{deliveryNumber} {pr} {packageType} Starttijd={startTime.ToLongTimeString()} Afgeleverd={deliveryTime.ToLongTimeString()} Tijdsduur:{tijdsduur.ToString("#0")}min";
             }
             return ListText;
         }

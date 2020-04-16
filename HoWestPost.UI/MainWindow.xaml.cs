@@ -1,6 +1,7 @@
 ﻿using HoWestPost.Domain;
 using System;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
@@ -15,12 +16,20 @@ namespace HoWestPost.UI
         #region Global variable
         
         DeliveryProcessor deliveryProcessor;
+     
+
+        
+
         #endregion
         #region MainWindow
         public MainWindow()
         {
             InitializeComponent();
             FillComboxDeliveryTime();
+           
+
+            
+
         }
         #endregion
         #region window open/closed
@@ -40,17 +49,67 @@ namespace HoWestPost.UI
         }
         #endregion
         #region DeliveryProcessor tick
-        private void DeliveryProcessor_Tick(object sender)
+        void DeliveryProcessor_Tick(object sender)
         {
             Dispatcher.Invoke(delegate
             {
                 lblTime.Content = DateTime.Now.ToLongTimeString();
-            
-                lblGemiddelde.Content = deliveryProcessor.AverageTime(deliveryProcessor.sentPackets).ToString("#0.00");
-                lblGemiddeldeNonPrior.Content = deliveryProcessor.AverageTime(deliveryProcessor.sentPackets.Where(_ => _.prior == false).ToList()).ToString("#0.00");
-                lblGemiddelde_Pror.Content = deliveryProcessor.AverageTime(deliveryProcessor.sentPackets.Where(_ => _.prior == true).ToList()).ToString("#0.00");
-                lblTimeLeft1.Content = deliveryProcessor.TimeLeft().ToString("#0.00");
+                Thread isThereWorkinWaitinglist = new Thread(IsThereWorkInWaitingList);
+                Thread calculateAvarage = new Thread(CalculateAvarage);
+                Thread timeleft = new Thread(Timeleft);
+                calculateAvarage.Start();
+                isThereWorkinWaitinglist.Start();
+                timeleft.Start();
+                if (deliveryProcessor.TimeLeft() > 0)
+                {
+                    progressBar.Value = 100 - ((deliveryProcessor.TimeLeft() / deliveryProcessor.activeDelivery.realTravelTime) * 100);
+                }
+                if (deliveryProcessor.sentPackets.Count() > ListBoxSent.Items.Count)
+                {
+                    ListBoxSent.Items.Add(deliveryProcessor.sentPackets.Last());
+                }
 
+            });
+        }
+
+        
+
+        private void Timeleft()
+        {
+            this.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                lblTimeLeft1.Content = deliveryProcessor.TimeLeft().ToString("#0.00");
+            }));
+        }
+
+        #endregion
+
+
+        #region button mini standaard maxi 
+        private void ButtonMini_Click(object sender, RoutedEventArgs e)
+        {
+            
+
+            deliveryProcessor.AddToWaitinglist(PackageType.Mini, int.Parse(ComboxDeliveryTime.SelectedItem.ToString()), CheckBoxPrior.IsChecked.Value);
+            UpdateWaitingList();
+        }
+        private void CalculateAvarage()
+        {
+
+            this.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                lblGemiddelde.Content = deliveryProcessor.AverageTime(deliveryProcessor.sentPackets).ToString("#0.00") + "min";
+                lblGemiddeldeNonPrior.Content = deliveryProcessor.AverageTime(deliveryProcessor.sentPackets.Where(_ => _.prior == false).ToList()).ToString("#0.00") + "min";
+                lblGemiddelde_Pror.Content = deliveryProcessor.AverageTime(deliveryProcessor.sentPackets.Where(_ => _.prior == true).ToList()).ToString("#0.00") + "min";
+
+            }));
+        }
+
+        private void IsThereWorkInWaitingList()
+        {
+            
+            this.Dispatcher.BeginInvoke(new Action(() =>
+            {
                 if (deliveryProcessor.IsThereWorkInWaitingList() == true)
                 {
                     lblPrior.Content = deliveryProcessor.activeDelivery.prior;
@@ -65,28 +124,9 @@ namespace HoWestPost.UI
                         ListBoxWaiting.Items.Add(d);
                     }
                 }
-                
-                if (deliveryProcessor.TimeLeft() > 0)
-                {
-                    progressBar.Value = 100 - ((deliveryProcessor.TimeLeft()/deliveryProcessor.activeDelivery.realTravelTime  ) * 100);
-                }
-                if (deliveryProcessor.sentPackets.Count() > ListBoxSent.Items.Count)
-                {
-                    ListBoxSent.Items.Add(deliveryProcessor.sentPackets.Last());
-                }
-            });
+            }));
         }
-        
-        #endregion
 
-      
-        #region button mini standaard maxi 
-        private void ButtonMini_Click(object sender, RoutedEventArgs e)
-        {
-
-            deliveryProcessor.AddToWaitinglist(PackageType.Mini, int.Parse(ComboxDeliveryTime.SelectedItem.ToString()), CheckBoxPrior.IsChecked.Value);
-            UpdateWaitingList();
-        }
         private void ButtonStandaard_Click(object sender, RoutedEventArgs e)
         {
             deliveryProcessor.AddToWaitinglist(PackageType.Standard, int.Parse(ComboxDeliveryTime.SelectedItem.ToString()), CheckBoxPrior.IsChecked.Value);

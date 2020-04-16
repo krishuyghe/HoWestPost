@@ -46,6 +46,7 @@
         <Label x:Name="lblGemiddelde_Pror" Content="Gemiddelde" HorizontalAlignment="Left" Margin="138,160,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="97" RenderTransformOrigin="0.465,-0.679"/>
         <Label Content="Gemiddelde levertijd nonprior:" HorizontalAlignment="Left" Margin="9,180,0,0" VerticalAlignment="Top" Height="27" Width="173" FontSize="10"/>
         <Label x:Name="lblGemiddeldeNonPrior" Content="Gemiddelde" HorizontalAlignment="Left" Margin="152,180,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="97" RenderTransformOrigin="0.465,-0.679"/>
+        <Label x:Name="lblTest" Content="Label" HorizontalAlignment="Left" Margin="24,206,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>
