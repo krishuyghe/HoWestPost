@@ -9,7 +9,7 @@ namespace HoWestPost.Domain
     {
         #region Globale Variabelen
         private Timer timer;
-        public event TiktHandler Tick;
+        public event TiktHan   dler Tick;
         public int deliveryTime = 30;
 
         public DateTime startTime;
@@ -25,8 +25,9 @@ namespace HoWestPost.Domain
         public DeliveryProcessor()
         {
             timer = new Timer();
-            timer.Interval = 100;   
+            timer.Interval = 50;   
             timer.Elapsed += Timer_Elapsed;
+            
         }
 
       
@@ -35,7 +36,7 @@ namespace HoWestPost.Domain
         #region Methodes
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            Tick(this);
+            if (Tick != null) Tick(this);
         }
 
         public void Start()

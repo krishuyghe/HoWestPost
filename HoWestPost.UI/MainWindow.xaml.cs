@@ -53,6 +53,7 @@ namespace HoWestPost.UI
                 Thread printTimeleft = new Thread(PrintTimeleft);
                 Thread progresBarLeftTime = new Thread(ProgresBarLeftTime);
                 Thread addListboxSent = new Thread(AddListboxSent);
+                
                 calculateAvarage.Start();
                 isThereWorkinWaitinglist.Start();
                 printTimeleft.Start();
@@ -76,8 +77,10 @@ namespace HoWestPost.UI
         {
             this.Dispatcher.BeginInvoke(new Action(() =>
             {
+                
                 if (deliveryProcessor.TimeLeft() > 0)
                 {
+                    
                     progressBar.Value = 100 - ((deliveryProcessor.TimeLeft() / deliveryProcessor.activeDelivery.realTravelTime) * 100);
                 }
             }));
@@ -98,10 +101,11 @@ namespace HoWestPost.UI
                 lblGemiddelde.Content = deliveryProcessor.AverageTime(deliveryProcessor.sentPackets).ToString("#0.00") + "min";
                 lblGemiddeldeNonPrior.Content = deliveryProcessor.AverageTime(deliveryProcessor.sentPackets.Where(_ => _.prior == false).ToList()).ToString("#0.00") + "min";
                 lblGemiddelde_Pror.Content = deliveryProcessor.AverageTime(deliveryProcessor.sentPackets.Where(_ => _.prior == true).ToList()).ToString("#0.00") + "min";
-
+                lblGemiddeldeMaxi.Content = deliveryProcessor.AverageTime(deliveryProcessor.sentPackets.Where(_ => _.packageType == PackageType.Maxi).ToList()).ToString("0.00") + "min";
+                lblGemiddeldeMini.Content = deliveryProcessor.AverageTime(deliveryProcessor.sentPackets.Where(_ => _.packageType == PackageType.Mini).ToList()).ToString("0.00") + "min";
+                lblGemiddeldeStandaard.Content = deliveryProcessor.AverageTime(deliveryProcessor.sentPackets.Where(_ => _.packageType == PackageType.Standard).ToList()).ToString("0.00") + "min";
             }));
         }
-
         private void IsThereWorkInWaitingList()
         {
 
