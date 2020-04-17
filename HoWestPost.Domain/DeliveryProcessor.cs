@@ -9,7 +9,7 @@ namespace HoWestPost.Domain
     {
         #region Globale Variabelen
         private Timer timer;
-        public event TiktHan   dler Tick;
+        public event TiktHandler Tick;
         public int deliveryTime = 30;
 
         public DateTime startTime;
