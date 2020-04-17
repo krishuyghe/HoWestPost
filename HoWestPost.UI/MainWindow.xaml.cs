@@ -17,19 +17,13 @@ namespace HoWestPost.UI
         
         DeliveryProcessor deliveryProcessor;
      
-
-        
-
         #endregion
         #region MainWindow
         public MainWindow()
         {
             InitializeComponent();
+            ClearGui();
             FillComboxDeliveryTime();
-           
-
-            
-
         }
         #endregion
         #region window open/closed
@@ -56,42 +50,45 @@ namespace HoWestPost.UI
                 lblTime.Content = DateTime.Now.ToLongTimeString();
                 Thread isThereWorkinWaitinglist = new Thread(IsThereWorkInWaitingList);
                 Thread calculateAvarage = new Thread(CalculateAvarage);
-                Thread timeleft = new Thread(Timeleft);
+                Thread printTimeleft = new Thread(PrintTimeleft);
+                Thread progresBarLeftTime = new Thread(ProgresBarLeftTime);
+                Thread addListboxSent = new Thread(AddListboxSent);
                 calculateAvarage.Start();
                 isThereWorkinWaitinglist.Start();
-                timeleft.Start();
-                if (deliveryProcessor.TimeLeft() > 0)
-                {
-                    progressBar.Value = 100 - ((deliveryProcessor.TimeLeft() / deliveryProcessor.activeDelivery.realTravelTime) * 100);
-                }
+                printTimeleft.Start();
+                progresBarLeftTime.Start();
+                addListboxSent.Start();
+            });
+        }
+        #endregion
+        #region Thread voids
+        private void AddListboxSent()
+        {
+            this.Dispatcher.BeginInvoke(new Action(() =>
+            {
                 if (deliveryProcessor.sentPackets.Count() > ListBoxSent.Items.Count)
                 {
                     ListBoxSent.Items.Add(deliveryProcessor.sentPackets.Last());
                 }
-
-            });
+            }));
         }
-
-        
-
-        private void Timeleft()
+        private void ProgresBarLeftTime()
+        {
+            this.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                if (deliveryProcessor.TimeLeft() > 0)
+                {
+                    progressBar.Value = 100 - ((deliveryProcessor.TimeLeft() / deliveryProcessor.activeDelivery.realTravelTime) * 100);
+                }
+            }));
+            
+        }
+        private void PrintTimeleft()
         {
             this.Dispatcher.BeginInvoke(new Action(() =>
             {
                 lblTimeLeft1.Content = deliveryProcessor.TimeLeft().ToString("#0.00");
             }));
-        }
-
-        #endregion
-
-
-        #region button mini standaard maxi 
-        private void ButtonMini_Click(object sender, RoutedEventArgs e)
-        {
-            
-
-            deliveryProcessor.AddToWaitinglist(PackageType.Mini, int.Parse(ComboxDeliveryTime.SelectedItem.ToString()), CheckBoxPrior.IsChecked.Value);
-            UpdateWaitingList();
         }
         private void CalculateAvarage()
         {
@@ -107,7 +104,7 @@ namespace HoWestPost.UI
 
         private void IsThereWorkInWaitingList()
         {
-            
+
             this.Dispatcher.BeginInvoke(new Action(() =>
             {
                 if (deliveryProcessor.IsThereWorkInWaitingList() == true)
@@ -126,6 +123,17 @@ namespace HoWestPost.UI
                 }
             }));
         }
+        #endregion
+
+
+        #region button mini standaard maxi 
+        private void ButtonMini_Click(object sender, RoutedEventArgs e)
+        {
+            deliveryProcessor.AddToWaitinglist(PackageType.Mini, int.Parse(ComboxDeliveryTime.SelectedItem.ToString()), CheckBoxPrior.IsChecked.Value);
+            UpdateWaitingList();
+        }
+       
+       
 
         private void ButtonStandaard_Click(object sender, RoutedEventArgs e)
         {
@@ -138,19 +146,19 @@ namespace HoWestPost.UI
             UpdateWaitingList();
         }
         #endregion
-        
-        #region UpdateWaitinglist
-        
-        private void UpdateWaitingList ()
+        #region clear gui and fill combobox 
+        private void ClearGui()
         {
+            lblPrior.Content = "";
+            lblTotalTravelTime.Content = "";
+            lblTimeLeft1.Content = "";
+            lblType.Content = "";
+            lblPacketNumber.Content = "";
+            progressBar.Value = 0;
             ListBoxWaiting.Items.Clear();
-            foreach (Delivery d in deliveryProcessor.deliveries)
-            {
-                ListBoxWaiting.Items.Add(d);
-            }
+            ListBoxSent.Items.Clear();
         }
-        #endregion
-        private void FillComboxDeliveryTime ()
+        private void FillComboxDeliveryTime()
         {
             int counter = 30;
             while (counter < 95)
@@ -160,6 +168,19 @@ namespace HoWestPost.UI
             }
             ComboxDeliveryTime.SelectedIndex = 0;
         }
+        #endregion
+        #region UpdateWaitinglist
+
+        private void UpdateWaitingList ()
+        {
+            ListBoxWaiting.Items.Clear();
+            foreach (Delivery d in deliveryProcessor.deliveries)
+            {
+                ListBoxWaiting.Items.Add(d);
+            }
+        }
+        #endregion
+        
 
         private void ComboxDeliveryTime_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

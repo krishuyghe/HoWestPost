@@ -25,14 +25,14 @@ namespace HoWestPost.Domain
         public DeliveryProcessor()
         {
             timer = new Timer();
-            timer.Interval = 1;   
+            timer.Interval = 100;   
             timer.Elapsed += Timer_Elapsed;
         }
 
       
         #endregion
 
-        #region Klassemethoden
+        #region Methodes
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             Tick(this);
@@ -87,7 +87,7 @@ namespace HoWestPost.Domain
            
         }
 
-        #endregion
+    
         public  bool IsThereWorkInWaitingList ()
         {
             bool work = false;
@@ -100,7 +100,7 @@ namespace HoWestPost.Domain
             }
             return work;
         }
-        public double TimeLeft ()
+        public double TimeLeft()
         {
             double value = 0;
             if (activeDelivery != null)
@@ -120,6 +120,7 @@ namespace HoWestPost.Domain
             }
             return value;
         }
+        #endregion
 
 
     }

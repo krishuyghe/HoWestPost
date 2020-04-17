@@ -24,29 +24,28 @@
         <Image HorizontalAlignment="Left" Height="82" Margin="587,53,0,0" VerticalAlignment="Top" Width="115"/>
         <Image Margin="570,52,114,128" Source="Image1.png" Stretch="Fill" RenderTransformOrigin="1.769,1.202"/>
         <ProgressBar x:Name="progressBar" HorizontalAlignment="Left" Height="10" Margin="570,160,0,0" VerticalAlignment="Top" Width="166" AutomationProperties.Name="progresTime"/>
-        <Label Content="Totale reistijd" HorizontalAlignment="Left" Margin="570,237,0,0" VerticalAlignment="Top" Width="99" Height="30" Grid.RowSpan="2"/>
-        <Label Content="Post type" HorizontalAlignment="Left" Margin="570,4,0,0" VerticalAlignment="Top" Width="78" Height="30" Grid.Row="1"/>
-        <Label Content="Pior" HorizontalAlignment="Left" Margin="570,39,0,0" VerticalAlignment="Top" Height="27" Grid.Row="1" Grid.RowSpan="2"/>
-        <Label Content="Resterent" HorizontalAlignment="Left" Margin="570,6,0,0" VerticalAlignment="Top" Height="26" Grid.Row="2"/>
+        <Label Content="Totale reistijd" HorizontalAlignment="Left" Margin="570,220,0,0" VerticalAlignment="Top" Width="99" Height="30"/>
+        <Label Content="Post type" HorizontalAlignment="Left" Margin="572,250,0,0" VerticalAlignment="Top" Width="78" Height="30" Grid.RowSpan="2"/>
+        <Label Content="Pior" HorizontalAlignment="Left" Margin="572,21,0,0" VerticalAlignment="Top" Height="27" Grid.Row="1" RenderTransformOrigin="1.011,0.568"/>
+        <Label Content="Resterent" HorizontalAlignment="Left" Margin="572,0,0,134" VerticalAlignment="Bottom" Height="26" Grid.Row="1" Grid.RowSpan="2"/>
         <Label HorizontalAlignment="Left" Margin="664,191,0,0" VerticalAlignment="Top" AutomationProperties.Name="lblTotalTravelTime" FontWeight="Bold"/>
-        <Label x:Name="lblType" Content="lblPostType" HorizontalAlignment="Left" Margin="664,4,-32,0" VerticalAlignment="Top" AutomationProperties.Name="lblPostType" FontWeight="Bold" Height="30" Width="114" Grid.Row="1"/>
-        <Label x:Name="lblPrior" Content="lblPrior" HorizontalAlignment="Left" Margin="664,39,-25,0" VerticalAlignment="Top" AutomationProperties.Name="lblPrior" FontWeight="Bold" Height="27" Width="107" Grid.Row="1" Grid.RowSpan="2"/>
-        <Label x:Name="lblTimeLeft1" Content="lblTimeleft" HorizontalAlignment="Left" Margin="664,6,-25,0" VerticalAlignment="Top" AutomationProperties.Name="lblResterent" FontWeight="Bold" Height="26" Width="107" Grid.Row="2"/>
-        <Label x:Name="lblTotalTravelTime" Content="lblTotalTravelTime" HorizontalAlignment="Left" Margin="664,237,0,0" VerticalAlignment="Top" AutomationProperties.Name="lblTotalTravelTime" FontWeight="Bold" Height="30" Grid.RowSpan="2"/>
+        <Label x:Name="lblType" Content="lblPostType" HorizontalAlignment="Left" Margin="664,250,-32,0" VerticalAlignment="Top" AutomationProperties.Name="lblPostType" FontWeight="Bold" Height="30" Width="114" Grid.RowSpan="2"/>
+        <Label x:Name="lblPrior" Content="lblPrior" HorizontalAlignment="Left" Margin="664,21,-25,0" VerticalAlignment="Top" AutomationProperties.Name="lblPrior" FontWeight="Bold" Height="27" Width="107" Grid.Row="1"/>
+        <Label x:Name="lblTimeLeft1" Content="lblTimeleft" HorizontalAlignment="Left" Margin="664,45,-25,0" VerticalAlignment="Top" AutomationProperties.Name="lblResterent" FontWeight="Bold" Height="26" Width="107" Grid.Row="1" Grid.RowSpan="2"/>
+        <Label x:Name="lblTotalTravelTime" Content="lblTotalTravelTime" HorizontalAlignment="Left" Margin="664,220,0,0" VerticalAlignment="Top" AutomationProperties.Name="lblTotalTravelTime" FontWeight="Bold" Height="30" RenderTransformOrigin="0.447,-0.078"/>
         <ComboBox IsSelected="True" x:Name="ComboxDeliveryTime" HorizontalAlignment="Left" Margin="84,52,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboxDeliveryTime_SelectionChanged"/>
         <Label x:Name="lblTime" Content="Label" HorizontalAlignment="Left" Margin="507,18,0,0" VerticalAlignment="Top" Width="52" Height="33" FontWeight="Bold"/>
-        <Label Content="PacketNr" HorizontalAlignment="Left" Margin="570,208,0,0" VerticalAlignment="Top" Width="78" Height="24"/>
-        <Label x:Name="lblPacketNumber" Content="lblPacketNumber" HorizontalAlignment="Left" Margin="664,208,-32,0" VerticalAlignment="Top" Width="114" FontWeight="Bold"/>
+        <Label Content="PacketNr" HorizontalAlignment="Left" Margin="570,191,0,0" VerticalAlignment="Top" Width="78" Height="24"/>
+        <Label x:Name="lblPacketNumber" Content="lblPacketNumber" HorizontalAlignment="Left" Margin="664,191,-32,0" VerticalAlignment="Top" Width="114" FontWeight="Bold" RenderTransformOrigin="0.503,-0.051"/>
         <ListBox x:Name="ListBoxSent" HorizontalAlignment="Left" Height="181" Margin="18,4,0,0" VerticalAlignment="Top" Width="535" Grid.Row="1" Grid.RowSpan="2"/>
         <Label Content="Verzonden paketten" HorizontalAlignment="Left" Margin="267,207,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Height="35" Width="260"/>
         <Label Content="Huidige tijd:" HorizontalAlignment="Left" Margin="426,18,0,0" VerticalAlignment="Top" Width="83"/>
         <Label Content="Gemiddelde levertijd:&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,140,0,0" VerticalAlignment="Top" Height="26" FontSize="10"/>
-        <Label x:Name="lblGemiddelde" Content="Gemiddelde" HorizontalAlignment="Left" Margin="138,140,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="97" RenderTransformOrigin="0.465,-0.679"/>
+        <Label x:Name="lblGemiddelde" Content="Gemiddelde" HorizontalAlignment="Left" Margin="152,140,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="83" RenderTransformOrigin="0.465,-0.679"/>
         <Label Content="Gemiddelde levertijd prior:" HorizontalAlignment="Left" Margin="10,160,0,0" VerticalAlignment="Top" FontSize="10"/>
-        <Label x:Name="lblGemiddelde_Pror" Content="Gemiddelde" HorizontalAlignment="Left" Margin="138,160,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="97" RenderTransformOrigin="0.465,-0.679"/>
+        <Label x:Name="lblGemiddelde_Pror" Content="Gemiddelde" HorizontalAlignment="Left" Margin="152,160,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="83" RenderTransformOrigin="0.465,-0.679"/>
         <Label Content="Gemiddelde levertijd nonprior:" HorizontalAlignment="Left" Margin="9,180,0,0" VerticalAlignment="Top" Height="27" Width="173" FontSize="10"/>
         <Label x:Name="lblGemiddeldeNonPrior" Content="Gemiddelde" HorizontalAlignment="Left" Margin="152,180,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="97" RenderTransformOrigin="0.465,-0.679"/>
-        <Label x:Name="lblTest" Content="Label" HorizontalAlignment="Left" Margin="24,206,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>
