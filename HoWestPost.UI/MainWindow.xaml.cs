@@ -81,7 +81,7 @@ namespace HoWestPost.UI
                 if (deliveryProcessor.TimeLeft() > 0)
                 {
                     
-                    progressBar.Value = 100 - ((deliveryProcessor.TimeLeft() / deliveryProcessor.activeDelivery.realTravelTime) * 100);
+                    progressBar.Value = 100 - ((deliveryProcessor.TimeLeft() / deliveryProcessor.activeDelivery[0].realTravelTime) * 100);
                 }
             }));
             
@@ -113,11 +113,12 @@ namespace HoWestPost.UI
             {
                 if (deliveryProcessor.IsThereWorkInWaitingList() == true)
                 {
-                    lblPrior.Content = deliveryProcessor.activeDelivery.prior;
-                    lblTotalTravelTime.Content = deliveryProcessor.activeDelivery.realTravelTime.ToString() + "min";
-                    lblTimeLeft1.Content = deliveryProcessor.activeDelivery.realTravelTime.ToString();
-                    lblType.Content = deliveryProcessor.activeDelivery.packageType;
-                    lblPacketNumber.Content = deliveryProcessor.activeDelivery.deliveryNumber;
+                    //voor de eerste drone voorlopig de enige 
+                    lblPrior.Content = deliveryProcessor.activeDelivery[0].prior;
+                    lblTotalTravelTime.Content = deliveryProcessor.activeDelivery[0].realTravelTime.ToString() + "min";
+                    lblTimeLeft1.Content = deliveryProcessor.activeDelivery[0].realTravelTime.ToString();
+                    lblType.Content = deliveryProcessor.activeDelivery[0].packageType;
+                    lblPacketNumber.Content = deliveryProcessor.activeDelivery[0].deliveryNumber;
                     progressBar.Value = 0;
                     ListBoxWaiting.Items.Clear();
                     foreach (Delivery d in deliveryProcessor.deliveries)

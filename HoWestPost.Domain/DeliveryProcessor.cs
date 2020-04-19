@@ -17,7 +17,12 @@ namespace HoWestPost.Domain
         public int deliveryNumber = 0;
         public List<Delivery> deliveries = new List<Delivery>();
         public List<Delivery> sentPackets = new List<Delivery>();
-        public Delivery activeDelivery;
+
+
+        public Delivery[] activeDelivery = { null, null, null };
+        
+
+        //  public Delivery activeDelivery;
         #endregion
 
         #region Constructor
@@ -27,10 +32,7 @@ namespace HoWestPost.Domain
             timer = new Timer();
             timer.Interval = 50;   
             timer.Elapsed += Timer_Elapsed;
-            
         }
-
-      
         #endregion
 
         #region Methodes
@@ -91,31 +93,35 @@ namespace HoWestPost.Domain
     
         public  bool IsThereWorkInWaitingList ()
         {
+            //voor de eerste drone voorlopig de enige
             bool work = false;
-            if ((activeDelivery == null) && (deliveries.Count() > 0))
+            if ((activeDelivery[0] == null) && (deliveries.Count() > 0))
             {
-                activeDelivery = deliveries.First();
-                deliveries.Remove(activeDelivery);
+                activeDelivery[0] = deliveries.First();
+                deliveries.Remove(activeDelivery[0]);
                 startTime = DateTime.Now;
                 work = true;
             }
             return work;
         }
+        
         public double TimeLeft()
         {
+            // voor de eerste drone voorlopig de enige
             double value = 0;
-            if (activeDelivery != null)
+          
+            if (activeDelivery[0] != null)
             {
                 double TimeDiverence = DateTime.Now.Subtract(startTime).TotalSeconds;
-                if ((10 * TimeDiverence) <= activeDelivery.realTravelTime)
+                if ((10 * TimeDiverence) <= activeDelivery[0].realTravelTime)
                 {
-                    value = activeDelivery.realTravelTime - (10 * TimeDiverence);
+                    value = activeDelivery[0].realTravelTime - (10 * TimeDiverence);
                 }
                 else
                 {
-                    activeDelivery.deliveryTime = DateTime.Now;
-                    sentPackets.Add(activeDelivery);
-                    activeDelivery = null;
+                    activeDelivery[0].deliveryTime = DateTime.Now;
+                    sentPackets.Add(activeDelivery[0]);
+                    activeDelivery[0] = null;
                     value = 0;
                 }
             }

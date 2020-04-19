@@ -13,6 +13,7 @@ namespace HoWestPost.Domain
         public int deliveryNumber;
         public bool prior;
         public double realTravelTime;
+        #region controler
         public Delivery(PackageType packageType, int travelTimeToDestination , bool prior, int deliveryNumber, double realTravelTime)
         {
             this.packageType = packageType;
@@ -22,6 +23,8 @@ namespace HoWestPost.Domain
             this.deliveryNumber = deliveryNumber;
             this.realTravelTime = realTravelTime;
         }
+        #endregion
+        #region override ToString methode
         public override string ToString()
         {
             int diverent = DateTime.Compare(startTime, deliveryTime);
@@ -38,11 +41,11 @@ namespace HoWestPost.Domain
             else
             {
                 double tijdsduur = deliveryTime.Subtract(startTime).TotalSeconds * 10;
-                ListText = $"{deliveryNumber} {pr} {packageType} Starttijd={startTime.ToLongTimeString()} Afgeleverd={deliveryTime.ToLongTimeString()} Tijdsduur:{tijdsduur.ToString("#0")}min";
+                ListText = $"{deliveryNumber} {pr} {packageType} Starttijd={startTime.ToLongTimeString()} Afgeleverd={deliveryTime.ToLongTimeString()}";
             }
             return ListText;
         }
+        #endregion
 
-        
     }
 }

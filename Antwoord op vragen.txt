@@ -1,0 +1,20 @@
+Welk algoritme heb je gekozen?
+
+PRIORITEIT GEBONDEN (FPPS)  De scheduler sorteert de processen in de ready queue op basis van deze prioriteit. 
+In mijn toepassing ofwel prior vlag of niet. 
+
+Beschrijf de voor en nadelen van het door jouw gekozen algoritme?
+
+Nadeel:
+-Indien teveel pakketten prioriteit hebben kan het ene pakket dat geen prioriteit heeft te lang moeten wachten op levering
+-Langdurige leveringen vertragen het systeem.   
+
+Voordeel: 
+- Hogere prioriteitspakketen kan je betere service aan leveren en zo de gemiddelde levertijd met naar beneden halen van deze pakketten.
+- Eenvoudig te implementeren
+
+Zijn er algoritmes die helemaal niet van toepassing zijn op dit systeem? zo ja welke en waarom?
+
+ROUND ROBIN
+pakketten in stukken kappen om te leveren totaal geen zin. De burger wil dat het pakket in 1 stuk aankomt. 
+
