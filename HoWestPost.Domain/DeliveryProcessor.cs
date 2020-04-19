@@ -18,8 +18,8 @@ namespace HoWestPost.Domain
         public List<Delivery> deliveries = new List<Delivery>();
         public List<Delivery> sentPackets = new List<Delivery>();
 
-
-        public Delivery[] activeDelivery = { null, null, null };
+        // array gemaakt nu nog maar 1 drone in de toekomst misschien meerdere
+        public Delivery[] activeDelivery = { null };
         
 
         //  public Delivery activeDelivery;
@@ -94,6 +94,7 @@ namespace HoWestPost.Domain
         public  bool IsThereWorkInWaitingList ()
         {
             //voor de eerste drone voorlopig de enige
+            
             bool work = false;
             if ((activeDelivery[0] == null) && (deliveries.Count() > 0))
             {

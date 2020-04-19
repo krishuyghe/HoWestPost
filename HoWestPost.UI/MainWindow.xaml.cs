@@ -71,6 +71,7 @@ namespace HoWestPost.UI
                 {
                     ListBoxSent.Items.Add(deliveryProcessor.sentPackets.Last());
                 }
+
             }));
         }
         private void ProgresBarLeftTime()
@@ -126,6 +127,7 @@ namespace HoWestPost.UI
                         ListBoxWaiting.Items.Add(d);
                     }
                 }
+                
             }));
         }
         #endregion
@@ -178,6 +180,8 @@ namespace HoWestPost.UI
 
         private void UpdateWaitingList ()
         {
+            
+
             ListBoxWaiting.Items.Clear();
             foreach (Delivery d in deliveryProcessor.deliveries)
             {
