@@ -59,6 +59,7 @@ namespace HoWestPost.UI
                 printTimeleft.Start();
                 progresBarLeftTime.Start();
                 addListboxSent.Start();
+                
             });
         }
         #endregion
