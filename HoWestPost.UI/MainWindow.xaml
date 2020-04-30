@@ -22,7 +22,7 @@
         <Label Content="In behandeling" HorizontalAlignment="Left" Margin="267,10,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Width="154"/>
         <Label Content="Onderweg" HorizontalAlignment="Left" Margin="570,10,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="20"/>
         <Image HorizontalAlignment="Left" Height="82" Margin="587,53,0,0" VerticalAlignment="Top" Width="115"/>
-        <Image Margin="570,52,114,185" Source="Image1.png" Stretch="Fill" RenderTransformOrigin="1.769,1.202"/>
+        <Image Margin="570,52,77,185" Source="Image1.png" Stretch="Fill" RenderTransformOrigin="1.769,1.202"/>
         <ProgressBar x:Name="progressBar" HorizontalAlignment="Left" Height="10" Margin="570,160,0,0" VerticalAlignment="Top" Width="166" AutomationProperties.Name="progresTime"/>
         <Label Content="Totale reistijd" HorizontalAlignment="Left" Margin="570,232,0,0" VerticalAlignment="Top" Width="99" Height="30"/>
         <Label Content="Post type" HorizontalAlignment="Left" Margin="572,262,0,0" VerticalAlignment="Top" Width="78" Height="30"/>
@@ -53,6 +53,12 @@
         <Label x:Name="lblGemiddeldeMini" Content="Gemiddelde" HorizontalAlignment="Left" Margin="152,202,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="97" RenderTransformOrigin="0.465,-0.679"/>
         <Label x:Name="lblGemiddeldeStandaard" Content="Gemiddelde" HorizontalAlignment="Left" Margin="152,222,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="97" RenderTransformOrigin="0.465,-0.679"/>
         <Label x:Name="lblGemiddeldeMaxi" Content="Gemiddelde" HorizontalAlignment="Left" Margin="152,243,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="97" RenderTransformOrigin="0.465,-0.679"/>
+        <Button x:Name="btnStop"  Margin="564,39,96,135" Grid.Row="1" Grid.RowSpan="2" Background="White" Click="btnStop_Click">
+            <Image Source="stop.png" Height="75" RenderTransformOrigin="0.5,0.5" Width="85" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+        </Button>
+        <Button x:Name="btnRestart"  Margin="655,39,10,135" Grid.Row="1" Background="White" Click="btnRestart_Click" Grid.RowSpan="2">
+            <Image Source="restart.png" Height="65" RenderTransformOrigin="0.5,0.5" Width="75" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+        </Button>
 
     </Grid>
 </Window>

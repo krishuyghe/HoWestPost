@@ -82,8 +82,8 @@ namespace HoWestPost.UI
                 
                 if (deliveryProcessor.TimeLeft() > 0)
                 {
-                    
-                    progressBar.Value = 100 - ((deliveryProcessor.TimeLeft() / deliveryProcessor.activeDelivery[0].realTravelTime) * 100);
+                   
+                    progressBar.Value = 100 - (deliveryProcessor.TimeLeft() / deliveryProcessor.activeDelivery[0].realTravelTime * 100) ;
                 }
             }));
             
@@ -190,8 +190,16 @@ namespace HoWestPost.UI
             }
         }
         #endregion
-        
-
+        private void btnStop_Click(object sender, RoutedEventArgs e)
+        {
+            deliveryProcessor.Stop();
+           
+        }
+        private void btnRestart_Click(object sender, RoutedEventArgs e)
+        {
+            
+            deliveryProcessor.Start();
+        }
         private void ComboxDeliveryTime_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
         }

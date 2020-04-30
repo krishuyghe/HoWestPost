@@ -113,7 +113,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Image\Image1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="restart.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="Image1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="stop.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
