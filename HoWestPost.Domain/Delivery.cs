@@ -14,6 +14,7 @@ namespace HoWestPost.Domain
         public int deliveryNumber;
         public bool prior;
         public double realTravelTime;
+        public int droneNumber;
         #region controler
         public Delivery(PackageType packageType, int travelTimeToDestination , bool prior, int deliveryNumber, double realTravelTime)
         {
@@ -41,11 +42,12 @@ namespace HoWestPost.Domain
             }
             else
             {
-                double tijdsduur = deliveryTime.Subtract(startTime).TotalSeconds * 10;
-                ListText = $"{deliveryNumber} {pr} {packageType} Start-tijd={startTime.ToLongTimeString()} Start vlucht={startFlightTime.ToLongTimeString()} Afgeleverd={deliveryTime.ToLongTimeString()}";
+                 ListText = $"{deliveryNumber} {pr} {packageType} Start-tijd={startTime.ToLongTimeString()} Start vlucht={startFlightTime.ToLongTimeString()} Afgeleverd={deliveryTime.ToLongTimeString()} drone:{droneNumber} ";
             }
             return ListText;
+            
         }
+        
         #endregion
 
     }
