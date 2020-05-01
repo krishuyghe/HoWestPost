@@ -99,8 +99,9 @@ namespace HoWestPost.Domain
             if ((activeDelivery[0] == null) && (deliveries.Count() > 0))
             {
                 activeDelivery[0] = deliveries.First();
+                activeDelivery[0].startFlightTime = DateTime.Now;
                 deliveries.Remove(activeDelivery[0]);
-                startTime = DateTime.Now;
+               // startTime = DateTime.Now;
                 work = true;
             }
             return work;
@@ -113,7 +114,7 @@ namespace HoWestPost.Domain
           
             if (activeDelivery[0] != null)
             {
-                double TimeDiverence = DateTime.Now.Subtract(startTime).TotalSeconds;
+                double TimeDiverence = DateTime.Now.Subtract(activeDelivery[0].startFlightTime).TotalSeconds;
                 if ((10 * TimeDiverence) <= activeDelivery[0].realTravelTime)
                 {
                     value = activeDelivery[0].realTravelTime - (10 * TimeDiverence);

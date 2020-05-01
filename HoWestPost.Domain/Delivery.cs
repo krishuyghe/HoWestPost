@@ -9,6 +9,7 @@ namespace HoWestPost.Domain
         public PackageType packageType;
         public int travelTime;
         public DateTime startTime;
+        public DateTime startFlightTime;
         public DateTime deliveryTime;
         public int deliveryNumber;
         public bool prior;
@@ -36,12 +37,12 @@ namespace HoWestPost.Domain
             }
             if (diverent > 0)
             {
-                ListText = $"{deliveryNumber} {pr} {packageType} Reistijd={travelTime} Starttijd={startTime.ToLongTimeString()}";
+                ListText = $"{deliveryNumber} {pr} {packageType} Reistijd={travelTime}  Start-tijd={startTime.ToLongTimeString()}";
             }
             else
             {
                 double tijdsduur = deliveryTime.Subtract(startTime).TotalSeconds * 10;
-                ListText = $"{deliveryNumber} {pr} {packageType} Starttijd={startTime.ToLongTimeString()} Afgeleverd={deliveryTime.ToLongTimeString()}";
+                ListText = $"{deliveryNumber} {pr} {packageType} Start-tijd={startTime.ToLongTimeString()} Start vlucht={startFlightTime.ToLongTimeString()} Afgeleverd={deliveryTime.ToLongTimeString()}";
             }
             return ListText;
         }
