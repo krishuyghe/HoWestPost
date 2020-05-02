@@ -18,11 +18,11 @@ namespace HoWestPost.Domain
         public List<Delivery> deliveries = new List<Delivery>();
         public List<Delivery> sentPackets = new List<Delivery>();
 
-        // array gemaakt nu nog maar 1 drone in de toekomst misschien meerdere
-        public Delivery[] activeDelivery = { null };
-      //  public Delivery[] activeDelivery = { null , null, null };
+        // array gemaakt nu nog maar 1 drone in de toekomst misschien meerdere 
+        public Delivery[] activeDelivery = new Delivery[1];
+      
 
-        //  public Delivery activeDelivery;
+        
         #endregion
 
         #region Constructor
@@ -81,7 +81,7 @@ namespace HoWestPost.Domain
                 {
                     gemiddelde += d.deliveryTime.Subtract(d.startTime).TotalSeconds;
                 }
-                return gemiddelde / sent.Count() * 10;
+                return gemiddelde / sent.Count();
             }
             else
             {
@@ -113,39 +113,30 @@ namespace HoWestPost.Domain
             return work;
         }
         
-        public double TimeLeft()
+        public double[] TimeLeft ()
         {
-            // voor de eerste drone voorlopig de enige
-            double value = 0;
             
-            if (activeDelivery[0] != null)
+            double[] value = new double [activeDelivery.Length];
+
+            for (int i = 0  ; i < activeDelivery.Count(); i++)
             {
-                double TimeDiverence = DateTime.Now.Subtract(activeDelivery[0].startFlightTime).TotalSeconds;
-                if ((10 * TimeDiverence) <= activeDelivery[0].realTravelTime)
-                {
-                    value = activeDelivery[0].realTravelTime - (10 * TimeDiverence);
-                }
-                else
-                {
-                    activeDelivery[0].deliveryTime = DateTime.Now;
-                    sentPackets.Add(activeDelivery[0]);
-                    activeDelivery[0] = null;
-                    value = 0;
-                }
-            }
-            for (int i = 1; i < activeDelivery.Count(); i++)
-            {
+
                 if (activeDelivery[i] != null)
                 {
                     double TimeDiverence = DateTime.Now.Subtract(activeDelivery[i].startFlightTime).TotalSeconds;
-                    if ((10 * TimeDiverence) > activeDelivery[i].realTravelTime)
+                    if ((10 * TimeDiverence) <= activeDelivery[i].realTravelTime)
+                    {
+                        value[i] = activeDelivery[i].realTravelTime - (10 * TimeDiverence);
+                    }
+                    else
                     {
                         activeDelivery[i].deliveryTime = DateTime.Now;
                         sentPackets.Add(activeDelivery[i]);
                         activeDelivery[i] = null;
-
+                        value[i] = 0;
                     }
                 }
+           
 
             }
             

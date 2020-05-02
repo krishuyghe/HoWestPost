@@ -24,6 +24,7 @@ namespace HoWestPost.UI
             InitializeComponent();
             ClearGui();
             FillComboxDeliveryTime();
+            
         }
         #endregion
         #region window open/closed
@@ -33,6 +34,7 @@ namespace HoWestPost.UI
             // Toevoegen van event => Link naar methode voor afhandeling
             deliveryProcessor.Tick += DeliveryProcessor_Tick;
             deliveryProcessor.Start();
+           
         }
          private void MainWindow_Closed(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -80,11 +82,13 @@ namespace HoWestPost.UI
             this.Dispatcher.BeginInvoke(new Action(() =>
             {
                 
-                if (deliveryProcessor.TimeLeft() > 0)
+                if (deliveryProcessor.TimeLeft()[0] > 0)
                 {
                    
-                    progressBar.Value = 100 - (deliveryProcessor.TimeLeft() / deliveryProcessor.activeDelivery[0].realTravelTime * 100) ;
+                    progressBar.Value = 100 - (deliveryProcessor.TimeLeft()[0] / deliveryProcessor.activeDelivery[0].realTravelTime * 100) ;
+                    
                 }
+                
             }));
             
         }
@@ -92,7 +96,17 @@ namespace HoWestPost.UI
         {
             this.Dispatcher.BeginInvoke(new Action(() =>
             {
-                lblTimeLeft1.Content = deliveryProcessor.TimeLeft().ToString("#0.00");
+                lblTimeLeft1.Content = deliveryProcessor.TimeLeft()[0].ToString("#0.00");
+                drone.Children.Clear();
+                for (int i = 0; i < deliveryProcessor.activeDelivery.Length; i++)
+                {
+                    
+                    System.Windows.Controls.Label label = new Label();
+                    label.Content = "Drone" + (i+1) + " Tijd Rest:" + deliveryProcessor.TimeLeft()[i].ToString("#0.00") ;
+                    label.Name = "dynamiclabel" + i.ToString();
+                    drone.Children.Add(label);
+                }
+
             }));
         }
         private void CalculateAvarage()
@@ -100,12 +114,12 @@ namespace HoWestPost.UI
 
             this.Dispatcher.BeginInvoke(new Action(() =>
             {
-                lblGemiddelde.Content = deliveryProcessor.AverageTime(deliveryProcessor.sentPackets).ToString("#0.00") + "min";
-                lblGemiddeldeNonPrior.Content = deliveryProcessor.AverageTime(deliveryProcessor.sentPackets.Where(_ => _.prior == false).ToList()).ToString("#0.00") + "min";
-                lblGemiddelde_Pror.Content = deliveryProcessor.AverageTime(deliveryProcessor.sentPackets.Where(_ => _.prior == true).ToList()).ToString("#0.00") + "min";
-                lblGemiddeldeMaxi.Content = deliveryProcessor.AverageTime(deliveryProcessor.sentPackets.Where(_ => _.packageType == PackageType.Maxi).ToList()).ToString("0.00") + "min";
-                lblGemiddeldeMini.Content = deliveryProcessor.AverageTime(deliveryProcessor.sentPackets.Where(_ => _.packageType == PackageType.Mini).ToList()).ToString("0.00") + "min";
-                lblGemiddeldeStandaard.Content = deliveryProcessor.AverageTime(deliveryProcessor.sentPackets.Where(_ => _.packageType == PackageType.Standard).ToList()).ToString("0.00") + "min";
+                lblGemiddelde.Content = deliveryProcessor.AverageTime(deliveryProcessor.sentPackets).ToString("#0.00");
+                lblGemiddeldeNonPrior.Content = deliveryProcessor.AverageTime(deliveryProcessor.sentPackets.Where(_ => _.prior == false).ToList()).ToString("#0.00");
+                lblGemiddelde_Pror.Content = deliveryProcessor.AverageTime(deliveryProcessor.sentPackets.Where(_ => _.prior == true).ToList()).ToString("#0.00");
+                lblGemiddeldeMaxi.Content = deliveryProcessor.AverageTime(deliveryProcessor.sentPackets.Where(_ => _.packageType == PackageType.Maxi).ToList()).ToString("0.00");
+                lblGemiddeldeMini.Content = deliveryProcessor.AverageTime(deliveryProcessor.sentPackets.Where(_ => _.packageType == PackageType.Mini).ToList()).ToString("0.00");
+                lblGemiddeldeStandaard.Content = deliveryProcessor.AverageTime(deliveryProcessor.sentPackets.Where(_ => _.packageType == PackageType.Standard).ToList()).ToString("0.00");
             }));
         }
         private void IsThereWorkInWaitingList()
@@ -127,14 +141,15 @@ namespace HoWestPost.UI
                     {
                         ListBoxWaiting.Items.Add(d);
                     }
+                    
                 }
                 
             }));
         }
-        #endregion
+#endregion
 
 
-        #region button mini standaard maxi 
+                #region button mini standaard maxi 
         private void ButtonMini_Click(object sender, RoutedEventArgs e)
         {
             deliveryProcessor.AddToWaitinglist(PackageType.Mini, int.Parse(ComboxDeliveryTime.SelectedItem.ToString()), CheckBoxPrior.IsChecked.Value);
@@ -153,8 +168,8 @@ namespace HoWestPost.UI
             deliveryProcessor.AddToWaitinglist(PackageType.Maxi, int.Parse(ComboxDeliveryTime.SelectedItem.ToString()), CheckBoxPrior.IsChecked.Value);
             UpdateWaitingList();
         }
-        #endregion
-        #region clear gui and fill combobox 
+                #endregion
+                #region clear gui and fill combobox 
         private void ClearGui()
         {
             lblPrior.Content = "";
@@ -176,20 +191,18 @@ namespace HoWestPost.UI
             }
             ComboxDeliveryTime.SelectedIndex = 0;
         }
-        #endregion
-        #region UpdateWaitinglist
+                #endregion
+                #region UpdateWaitinglist
 
         private void UpdateWaitingList ()
         {
-            
-
             ListBoxWaiting.Items.Clear();
             foreach (Delivery d in deliveryProcessor.deliveries)
             {
                 ListBoxWaiting.Items.Add(d);
             }
         }
-        #endregion
+                #endregion
         private void btnStop_Click(object sender, RoutedEventArgs e)
         {
             deliveryProcessor.Stop();
