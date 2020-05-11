@@ -115,14 +115,21 @@ namespace HoWestPost.Domain
             
             return work;
         }
-
+        // pakket word verzonden tijd gaan teroverheen en als het verzonden in voeg het toe aan verzonden pakketten en verwijder het uit aktieve vezendingslijst
         private void Fly(object obj)
         {
             var delivery = (Delivery)obj;
-            Thread.Sleep((int)delivery.realTravelTime * 100);
+            var realTraveltime = delivery.realTravelTime * 100;
+            Thread.Sleep((int)realTraveltime);
             delivery.deliveryTime = DateTime.Now;
             sentPackets.Add(delivery);
-            
+           
+            for (int i = 0; i < activeDelivery.Count(); i++)
+            {
+                if (activeDelivery[i] != null) {
+                    if (activeDelivery[i].deliveryNumber == delivery.deliveryNumber) activeDelivery[i] = null;
+                }
+            }
         }
         
 
@@ -147,7 +154,7 @@ namespace HoWestPost.Domain
                     }
                     else
                     {
-                        activeDelivery[i] = null;
+                       
                         value[i] = 0;
                     }
                 }
