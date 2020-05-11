@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Timers;
+
 
 namespace HoWestPost.Domain
 {
     public class DeliveryProcessor
     {
         #region Globale Variabelen
-        private Timer timer;
+        private System.Timers.Timer timer;
         public event TiktHandler Tick;
         public int deliveryTime = 30;
 
@@ -29,7 +31,7 @@ namespace HoWestPost.Domain
 
         public DeliveryProcessor()
         {
-            timer = new Timer();
+            timer = new System.Timers.Timer();
             timer.Interval = 50;   
             timer.Elapsed += Timer_Elapsed;
         }
@@ -38,7 +40,7 @@ namespace HoWestPost.Domain
         #region Methodes
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            if (Tick != null) Tick(this);
+            Tick?.Invoke(this);
         }
 
         public void Start()
@@ -104,7 +106,8 @@ namespace HoWestPost.Domain
                     activeDelivery[i].startFlightTime = DateTime.Now;
                     activeDelivery[i].droneNumber = i + 1;
                     deliveries.Remove(activeDelivery[i]);
-                   
+                    Thread fly = new Thread(Fly);
+                    fly.Start(activeDelivery[i]);
                     work = true;
                 }
             }
@@ -112,7 +115,20 @@ namespace HoWestPost.Domain
             
             return work;
         }
+
+        private void Fly(object obj)
+        {
+            var delivery = (Delivery)obj;
+            Thread.Sleep((int)delivery.realTravelTime * 100);
+            delivery.deliveryTime = DateTime.Now;
+            sentPackets.Add(delivery);
+        }
         
+
+
+
+
+
         public double[] TimeLeft ()
         {
             
@@ -130,8 +146,6 @@ namespace HoWestPost.Domain
                     }
                     else
                     {
-                        activeDelivery[i].deliveryTime = DateTime.Now;
-                        sentPackets.Add(activeDelivery[i]);
                         activeDelivery[i] = null;
                         value[i] = 0;
                     }
