@@ -122,6 +122,7 @@ namespace HoWestPost.Domain
             Thread.Sleep((int)delivery.realTravelTime * 100);
             delivery.deliveryTime = DateTime.Now;
             sentPackets.Add(delivery);
+            
         }
         
 

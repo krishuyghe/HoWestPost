@@ -70,9 +70,14 @@ namespace HoWestPost.UI
         {
             this.Dispatcher.BeginInvoke(new Action(() =>
             {
+                lblPakketten.Content = deliveryProcessor.sentPackets.Count().ToString();
                 if (deliveryProcessor.sentPackets.Count() > ListBoxSent.Items.Count)
                 {
-                    ListBoxSent.Items.Add(deliveryProcessor.sentPackets.Last());
+                    ListBoxSent.Items.Clear();
+                    foreach (Delivery s in deliveryProcessor.sentPackets)
+                    {
+                        ListBoxSent.Items.Add(s);
+                    }
                 }
 
             }));
