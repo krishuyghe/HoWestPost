@@ -146,9 +146,18 @@ namespace HoWestPost.UI
                     {
                         ListBoxWaiting.Items.Add(d);
                     }
-                    
+                  
                 }
-                
+                if (deliveryProcessor.activeDelivery[0] == null )
+                {
+                    lblPrior.Content = "";
+                    lblTotalTravelTime.Content = "";
+                    lblType.Content = "";
+                    lblPacketNumber.Content = "";
+                    progressBar.Value = 0;
+                }
+
+
             }));
         }
 #endregion
