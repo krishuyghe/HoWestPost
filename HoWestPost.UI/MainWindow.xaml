@@ -20,9 +20,9 @@
             <RowDefinition Height="191*"/>
         </Grid.RowDefinitions>
         <CheckBox x:Name="CheckBoxPrior" Content="Prior?" HorizontalAlignment="Left" Margin="69,90,0,0" VerticalAlignment="Top" Checked="CheckBoxPrior_Checked" Height="15" Width="50" />
-        <Button x:Name="ButtonMini" Content="mini" HorizontalAlignment="Left" Margin="9,115,0,0" VerticalAlignment="Top" Width="57" Click="ButtonMini_Click" Height="20"/>
+        <Button x:Name="ButtonMini" Content="mini" HorizontalAlignment="Left" Margin="9,115,0,0" VerticalAlignment="Top" Width="64" Click="ButtonMini_Click" Height="20"/>
         <ListBox x:Name="ListBoxWaiting" HorizontalAlignment="Left" Height="230" Margin="35,49,0,0" VerticalAlignment="Top" Width="305" AutomationProperties.Name="listBussy" Grid.ColumnSpan="2" Grid.Column="2"/>
-        <Button x:Name="ButtonStandaard" Content="standaard" HorizontalAlignment="Left" Margin="71,115,0,0" VerticalAlignment="Top" Width="75" Click="ButtonStandaard_Click" Height="20" Grid.ColumnSpan="2"/>
+        <Button x:Name="ButtonStandaard" Content="standaard" HorizontalAlignment="Left" Margin="78,115,0,0" VerticalAlignment="Top" Width="78" Click="ButtonStandaard_Click" Height="20" Grid.ColumnSpan="2"/>
         <Button x:Name="ButtonMaxi" Content="maxi" HorizontalAlignment="Left" Margin="11,115,0,0" VerticalAlignment="Top" Width="83" Click="buttonMaxi_Click" Height="20" Grid.Column="1" Grid.ColumnSpan="2"/>
         <Label Content="Reistijd" HorizontalAlignment="Left" Margin="18,49,0,0" VerticalAlignment="Top" AutomationProperties.Name="lblTravelTime" Height="26" Width="48"/>
         <Label Content="Pakket Versturen" HorizontalAlignment="Left" Margin="18,10,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Height="37" Width="212" Grid.ColumnSpan="3"/>

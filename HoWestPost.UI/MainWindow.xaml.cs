@@ -28,6 +28,8 @@ namespace HoWestPost.UI
         }
         #endregion
         #region window open/closed
+
+        //wanneer het window geladen wordt
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             deliveryProcessor = new DeliveryProcessor();
@@ -37,6 +39,7 @@ namespace HoWestPost.UI
             deliveryProcessor.Start();
            
         }
+        // wanneer het scherm gesloten wordt
          private void MainWindow_Closed(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (deliveryProcessor != null)
@@ -46,6 +49,7 @@ namespace HoWestPost.UI
         }
         #endregion
         #region DeliveryProcessor tick
+        // bij iedere tick overloopt hij deze functies 
         void DeliveryProcessor_Tick(object sender)
         {
             Dispatcher.Invoke(delegate
@@ -63,11 +67,12 @@ namespace HoWestPost.UI
                 progresBarLeftTime.Start();
                 addListboxSent.Start();
 
-                if (deliveryProcessor.MyIStop() == true) deliveryProcessor.Stop();
+                if (deliveryProcessor.CanIStop() == true) deliveryProcessor.Stop();
             });
         }
         #endregion
         #region Thread voids
+        // beheerd de addlistbox
         private void AddListboxSent()
         {
             this.Dispatcher.BeginInvoke(new Action(() =>
@@ -84,6 +89,7 @@ namespace HoWestPost.UI
 
             }));
         }
+        // beheerd de progressbar 
         private void ProgresBarLeftTime()
         {
             this.Dispatcher.BeginInvoke(new Action(() =>
@@ -99,6 +105,7 @@ namespace HoWestPost.UI
             }));
             
         }
+        // drukt de tijd af dat de drones nog onderweg zijn
         private void PrintTimeleft()
         {
             this.Dispatcher.BeginInvoke(new Action(() =>
@@ -116,6 +123,7 @@ namespace HoWestPost.UI
 
             }));
         }
+        // berekend de verschillende gemiddelden
         private void CalculateAvarage()
         {
 
@@ -129,6 +137,7 @@ namespace HoWestPost.UI
                 lblGemiddeldeStandaard.Content = deliveryProcessor.AverageTime(deliveryProcessor.sentPackets.Where(_ => _.packageType == PackageType.Standard).ToList()).ToString("0.00");
             }));
         }
+        // kijk na of er nog werk in in wachtlijst 
         private void IsThereWorkInWaitingList()
         {
 
@@ -166,6 +175,7 @@ namespace HoWestPost.UI
 
 
                 #region button mini standaard maxi 
+        
         private void ButtonMini_Click(object sender, RoutedEventArgs e)
         {
             deliveryProcessor.AddToWaitinglist(PackageType.Mini, int.Parse(ComboxDeliveryTime.SelectedItem.ToString()), CheckBoxPrior.IsChecked.Value);
@@ -201,6 +211,7 @@ namespace HoWestPost.UI
             ListBoxWaiting.Items.Clear();
             ListBoxSent.Items.Clear();
         }
+        // vult de combobox met de mogelijke tijdduur tussen 30 - 90
         private void FillComboxDeliveryTime()
         {
             int counter = 30;
@@ -213,7 +224,7 @@ namespace HoWestPost.UI
         }
                 #endregion
                 #region UpdateWaitinglist
-
+        // update de wachtlijst in de gui
         private void UpdateWaitingList ()
         {
             ListBoxWaiting.Items.Clear();
@@ -223,11 +234,13 @@ namespace HoWestPost.UI
             }
         }
                 #endregion
+        // stop het proces bv bij slecht weer of einde werkdag
         private void btnStop_Click(object sender, RoutedEventArgs e)
         {
             deliveryProcessor.Stop();
            
         }
+        // herstarten van het proces
         private void btnRestart_Click(object sender, RoutedEventArgs e)
         {
             

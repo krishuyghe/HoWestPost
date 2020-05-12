@@ -51,6 +51,7 @@ namespace HoWestPost.Domain
         {
             timer.Stop();
         }
+        // Maakt de leveringen aan met de juiste gegevens
         public void AddToWaitinglist(PackageType packageType, int traveltime, bool prior)
         {
             double realTravelTime = 0;
@@ -74,25 +75,26 @@ namespace HoWestPost.Domain
             deliveries = deliveries.OrderBy(x => x.deliveryNumber).OrderByDescending(p => p.prior).ToList();
             
         }
+        // berekent de gemiddelde tijd van de verzonden berichten deze funtie wordt meerdere keren gebruikt voor verschillende filters
         public double AverageTime(List<Delivery> sent)
         {
-            double gemiddelde = 0;
+            double totaltime = 0;
             if (sent.Count() > 0)
             {                
                 foreach (Delivery d in sent)
                 {
-                    gemiddelde += d.deliveryTime.Subtract(d.startTime).TotalSeconds;
+                    totaltime += d.deliveryTime.Subtract(d.startTime).TotalSeconds;
                 }
-                return gemiddelde / sent.Count();
+                return totaltime / sent.Count();
             }
             else
             {
-                return gemiddelde;
+                return totaltime;
             }
            
         }
 
-    
+        // is er werk in de lijst de wachtlijst? indien ja laat de drone(s) vliegen
         public  bool IsThereWorkInWaitingList ()
         {
             //voor de eerste drone voorlopig de enige
@@ -135,20 +137,21 @@ namespace HoWestPost.Domain
             
             
         }
-        public bool MyIStop ()
+        // functie om tijdelijk te stoppen als er geen werk is dit bespaart veel processerkracht. 
+        public bool CanIStop ()
         {
-            bool yes = false;
+            bool answer = false;
             if (deliveries.Count == 0)
             {
-                if (activeDelivery.Where(c => c != null).ToArray().Count() == 0) yes = true;                  
+                if (activeDelivery.Where(c => c != null).ToArray().Count() == 0) answer = true;                  
             }
-            return yes; 
+            return answer; 
         }
 
 
 
 
-
+        // geeft de tijden terug van hoelang de drone nog moet vliegen voordat dit terug komt.
         public double[] TimeLeft ()
         {
             
