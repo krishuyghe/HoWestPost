@@ -33,6 +33,7 @@ namespace HoWestPost.UI
             deliveryProcessor = new DeliveryProcessor();
             // Toevoegen van event => Link naar methode voor afhandeling
             deliveryProcessor.Tick += DeliveryProcessor_Tick;
+            
             deliveryProcessor.Start();
            
         }
@@ -61,7 +62,8 @@ namespace HoWestPost.UI
                 printTimeleft.Start();
                 progresBarLeftTime.Start();
                 addListboxSent.Start();
-                
+
+                if (deliveryProcessor.MyIStop() == true) deliveryProcessor.Stop();
             });
         }
         #endregion
@@ -168,6 +170,7 @@ namespace HoWestPost.UI
         {
             deliveryProcessor.AddToWaitinglist(PackageType.Mini, int.Parse(ComboxDeliveryTime.SelectedItem.ToString()), CheckBoxPrior.IsChecked.Value);
             UpdateWaitingList();
+            deliveryProcessor.Start();
         }
        
        
@@ -176,11 +179,14 @@ namespace HoWestPost.UI
         {
             deliveryProcessor.AddToWaitinglist(PackageType.Standard, int.Parse(ComboxDeliveryTime.SelectedItem.ToString()), CheckBoxPrior.IsChecked.Value);
             UpdateWaitingList();
+            
+            deliveryProcessor.Start();
         }
         private void buttonMaxi_Click(object sender, RoutedEventArgs e)
         {
             deliveryProcessor.AddToWaitinglist(PackageType.Maxi, int.Parse(ComboxDeliveryTime.SelectedItem.ToString()), CheckBoxPrior.IsChecked.Value);
             UpdateWaitingList();
+            deliveryProcessor.Start();
         }
                 #endregion
                 #region clear gui and fill combobox 

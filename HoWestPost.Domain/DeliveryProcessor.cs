@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Timers;
@@ -13,9 +14,7 @@ namespace HoWestPost.Domain
         private System.Timers.Timer timer;
         public event TiktHandler Tick;
         public int deliveryTime = 30;
-
         public DateTime startTime;
-        
         public int deliveryNumber = 0;
         public List<Delivery> deliveries = new List<Delivery>();
         public List<Delivery> sentPackets = new List<Delivery>();
@@ -32,7 +31,7 @@ namespace HoWestPost.Domain
         public DeliveryProcessor()
         {
             timer = new System.Timers.Timer();
-            timer.Interval = 50;   
+            timer.Interval = 100;   
             timer.Elapsed += Timer_Elapsed;
         }
         #endregion
@@ -73,6 +72,7 @@ namespace HoWestPost.Domain
             deliveryNumber++;
             deliveries.Add(new Delivery(packageType, traveltime, prior, deliveryNumber, realTravelTime));
             deliveries = deliveries.OrderBy(x => x.deliveryNumber).OrderByDescending(p => p.prior).ToList();
+            
         }
         public double AverageTime(List<Delivery> sent)
         {
@@ -107,6 +107,8 @@ namespace HoWestPost.Domain
                     activeDelivery[i].droneNumber = i + 1;
                     deliveries.Remove(activeDelivery[i]);
                     Thread fly = new Thread(Fly);
+                    
+                    
                     fly.Start(activeDelivery[i]);
                     work = true;
                 }
@@ -130,8 +132,18 @@ namespace HoWestPost.Domain
                     if (activeDelivery[i].deliveryNumber == delivery.deliveryNumber) activeDelivery[i] = null;
                 }
             }
+            
+            
         }
-        
+        public bool MyIStop ()
+        {
+            bool yes = false;
+            if (deliveries.Count == 0)
+            {
+                if (activeDelivery.Where(c => c != null).ToArray().Count() == 0) yes = true;                  
+            }
+            return yes; 
+        }
 
 
 

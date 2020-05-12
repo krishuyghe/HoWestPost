@@ -42,7 +42,7 @@ namespace HoWestPost.Domain
             }
             else
             {
-                 ListText = $"{deliveryNumber} {pr} {packageType} Start-tijd={startTime.ToLongTimeString()} Start vlucht={startFlightTime.ToLongTimeString()} Afgeleverd={deliveryTime.ToLongTimeString()} drone:{droneNumber} ";
+                 ListText = $"{deliveryNumber} {pr} {packageType} Start-tijd={startTime.ToLongTimeString()} Start vlucht={startFlightTime.ToLongTimeString()} Terug={deliveryTime.ToLongTimeString()} drone:{droneNumber} ";
             }
             return ListText;
             
